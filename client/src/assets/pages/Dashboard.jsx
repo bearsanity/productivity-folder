@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import CreateTask from '../components/CreateTaskForm';
 
 function Dashboard() {
     const [tasks, setTasks] = useState([]);
@@ -28,6 +29,7 @@ function Dashboard() {
                     <h3>{task.title}</h3>
                 </div>
             ))}
+            <CreateTask />
         </div>
     );
 }

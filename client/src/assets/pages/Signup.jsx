@@ -60,6 +60,7 @@ const SignUp = () => {
         console.log(data);
         const token = data.token;
         localStorage.setItem('token', token);
+        window.location.href = '/';
         } catch (error) {
             console.error(error.message);
         }

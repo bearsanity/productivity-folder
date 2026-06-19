@@ -10,6 +10,7 @@ const createTask = async (req, res) => {
             .status(201)
             .json({ task });
     } catch (err) {
+        console.log(err);
         return res
             .status(400)
             .json({ message: "Failed to create task" })
