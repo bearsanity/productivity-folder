@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 
-const CreateTask = () => {
+const CreateTask = ({ onTaskCreated, groups }) => {
     //=================== Hooks ===================
     const [title, setTitle] = useState('');
     const [frequency, setFrequency] = useState('none');
@@ -10,25 +10,8 @@ const CreateTask = () => {
     const [group, setGroup] = useState('');
     const [errorMessageTitle, setErrorMessageTitle] = useState('');
     const [errorMessageDueDate, setErrorMessageDueDate] = useState('');
-    const [groups, setGroups] = useState([]);
 
-    useEffect(() => {
-        const fetchGroups = async () => {
-            try {
-                const response = await fetch('/api/groups', {
-                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}`}
-                });
-                const data = await response.json();
-                setGroups(data);
-            } catch (err) {
-                console.error(err.message);
-            }
-        }
-        fetchGroups();
-    },[])
-
-
-    //Title and duedate cant be blank
+//Title and duedate cant be blank
     function handleBlur(e) {
         if (e.target.name === 'titleInput') {
             if (e.target.value.trim().length === 0) {
@@ -68,6 +51,7 @@ const CreateTask = () => {
             setFrequency('none');
             setDueDate('');
             setPriority('none');
+            onTaskCreated();
         } catch (err) {
             console.error(err.message);
         }
