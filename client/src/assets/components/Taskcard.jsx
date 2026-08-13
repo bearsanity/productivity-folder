@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import CalendarHeatmap from './CalendarHeatmap'
-import { Box, Button, Text, Heading, Input, NativeSelect } from '@chakra-ui/react' //for styling
+import { Box, Button, Text, Heading, Input, NativeSelect, Field } from '@chakra-ui/react' //for styling
 
 const Taskcard = ({ task, onTaskUpdated, groups }) => {
 
@@ -12,9 +12,9 @@ const Taskcard = ({ task, onTaskUpdated, groups }) => {
     const [editGroup, setEditGroup] = useState(task.group || '');
     const [isExpanded, setIsExpanded] = useState(false)
 
-//=============================================================================================================
-//==============================================Handler Functions==============================================
-//=============================================================================================================
+    //=============================================================================================================
+    //==============================================Handler Functions==============================================
+    //=============================================================================================================
 
     const handleComplete = async () => {
         try {
@@ -78,50 +78,58 @@ const Taskcard = ({ task, onTaskUpdated, groups }) => {
         }
     };
 
-//====================================================================================================
-//==============================================TaskCard==============================================
-//====================================================================================================
+    //====================================================================================================
+    //==============================================TaskCard==============================================
+    //====================================================================================================
     return (
         <Box>
             {isEditing ? (
                 <Box>
-                    <Field>
-                        Title: <Input name="titleInput" value={editTitle} onChange={(e) => setEditTitle(e.target.value)} />
+                    <Field.Root>
+                        <Field.Label>Title:</Field.Label>
+                        <Input name="titleInput" value={editTitle} onChange={(e) => setEditTitle(e.target.value)} />
                         {/* {errorMessageTitle && <p className="error-message">{errorMessageTitle}</Text>} */}
-                    </Field>
-                    <Field>
-                        Due Date: <Input name="dueDateInput" type="datetime-local" value={editDueDate} onChange={(e) => setEditDueDate(e.target.value)} />
+                    </Field.Root>
+                    <Field.Root>
+                        <Field.Label>Due Date:</Field.Label>
+                        <Input name="dueDateInput" type="datetime-local" value={editDueDate} onChange={(e) => setEditDueDate(e.target.value)} />
                         {/* {errorMessageDueDate && <p className="error-message">{errorMessageDueDate}</Text>} */}
-                    </Field>
-                    <Field>
-                        Frequency:
-                        <select value={editFrequency} onChange={(e) => setEditFrequency(e.target.value)}>
-                            <option value="none">None</option>
-                            <option value="daily">Daily</option>
-                            <option value="weekly">Weekly</option>
-                            <option value="monthly">Monthly</option>
-                            <option value="yearly">Yearly</option>
-                        </select>
-                    </Field>
-                    <Field>
-                        Priority:
-                        <select value={editPriority} onChange={(e) => setEditPriority(e.target.value)}>
-                            <option value="none">None</option>
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
-                            <option value="top">Top</option>
-                        </select>
-                    </Field>
-                    <Field>
-                        Group:
-                        <select value={editGroup} onChange={(e) => setEditGroup(e.target.value)}>
-                            <option value="">No group</option>
-                            {groups.map((g) => (
-                                <option key={g._id} value={g._id}>{g.title}</option>
-                            ))}
-                        </select>
-                    </Field>
+                    </Field.Root>
+                    <Field.Root>
+                        <Field.Label>Frequency:</Field.Label>
+                        <NativeSelect.Root>
+                            <NativeSelect.Field value={editFrequency} onChange={(e) => setEditFrequency(e.target.value)}>
+                                <option value="none">None</option>
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="yearly">Yearly</option>
+                            </NativeSelect.Field>
+                        </NativeSelect.Root>
+                    </Field.Root>
+                    <Field.Root>
+                        <Field.Label>Priority:</Field.Label>
+                        <NativeSelect.Root>
+                            <NativeSelect.Field value={editPriority} onChange={(e) => setEditPriority(e.target.value)}>
+                                <option value="none">None</option>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                                <option value="top">Top</option>
+                            </NativeSelect.Field>
+                        </NativeSelect.Root>
+                    </Field.Root>
+                    <Field.Root>
+                        <Field.Label>Group:</Field.Label>
+                        <NativeSelect.Root>
+                            <NativeSelect.Field value={editGroup} onChange={(e) => setEditGroup(e.target.value)}>
+                                <option value="">No group</option>
+                                {groups.map((g) => (
+                                    <option key={g._id} value={g._id}>{g.title}</option>
+                                ))}
+                            </NativeSelect.Field>
+                        </NativeSelect.Root>
+                    </Field.Root>
                     <Button className="submitButton" type="button" onClick={handleSubmit}>Save</Button>
                     <Button className="cancelButton" type="button" onClick={() => setIsEditing(false)}>Cancel</Button>
                 </Box>

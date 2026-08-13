@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+import { Box, Button, Field, Input, NativeSelect } from '@chakra-ui/react'
 
 const CreateTask = ({ onTaskCreated, groups }) => {
     //=================== Hooks ===================
@@ -11,7 +11,9 @@ const CreateTask = ({ onTaskCreated, groups }) => {
     const [errorMessageTitle, setErrorMessageTitle] = useState('');
     const [errorMessageDueDate, setErrorMessageDueDate] = useState('');
 
-//Title and duedate cant be blank
+
+
+    //Title and duedate cant be blank
     function handleBlur(e) {
         if (e.target.name === 'titleInput') {
             if (e.target.value.trim().length === 0) {
@@ -39,8 +41,8 @@ const CreateTask = ({ onTaskCreated, groups }) => {
                     'Authorization': `Bearer ${localStorage.getItem('token')}` // JWT token for the auth middleware
                 },
 
-                 // spread pattern says "if group has a value, include it; if it's empty, don't send it at all." That way Mongoose never sees the field and won't try to cast it
-                body: JSON.stringify({ title, frequency, dueDate, priority, ...( group ? { group } : {}) }) // converts state values to JSON string
+                // spread pattern says "if group has a value, include it; if it's empty, don't send it at all." That way Mongoose never sees the field and won't try to cast it
+                body: JSON.stringify({ title, frequency, dueDate, priority, ...(group ? { group } : {}) }) // converts state values to JSON string
             });
             if (!response.ok) {
                 throw new Error(`Response status: ${response.status}`);
@@ -58,47 +60,55 @@ const CreateTask = ({ onTaskCreated, groups }) => {
     };
 
     return (
-        <form onSubmit={(e) => e.preventDefault()}>
-            <label>
-                Title: <input name="titleInput" value={title} onChange={(e) => setTitle(e.target.value)} onBlur={handleBlur} />
-                {errorMessageTitle && <p className="error-message">{errorMessageTitle}</p>}
-            </label>
-            <label>
-                Due Date: <input name="dueDateInput" type="datetime-local" value={dueDate} onChange={(e) => setDueDate(e.target.value)} onBlur={handleBlur} />
-                {errorMessageDueDate && <p className="error-message">{errorMessageDueDate}</p>}
-            </label>
-            <label>
-                Frequency:
-                <select value={frequency} onChange={(e) => setFrequency(e.target.value)}>
-                    <option value="none">None</option>
-                    <option value="daily">Daily</option>
-                    <option value="weekly">Weekly</option>
-                    <option value="monthly">Monthly</option>
-                    <option value="yearly">Yearly</option>
-                </select>
-            </label>
-            <label>
-                Priority:
-                <select value={priority} onChange={(e) => setPriority(e.target.value)}>
-                    <option value="none">None</option>
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
-                    <option value="top">Top</option>
-                </select>
-            </label>
-            <label>
-                Group:
-                <select value={group} onChange={(e) => setGroup(e.target.value)}>
-                    <option value="">No group</option>
-                    {groups.map((g) => (
-                        <option key={g._id} value={g._id}>{g.title}</option>
-                    ))}
-                </select>
-            </label>
-            <button className="submitButton" type="button" onClick={handleSubmit}>Submit</button>
-            <button className="cancelButton" type="button">Cancel</button>
-        </form>
+        <Box as="form" onSubmit={(e) => e.preventDefault()}>
+            <Field.Root>
+                <Field.Label>Title:</Field.Label>
+                <Input name="titleInput" value={title} onChange={(e) => setTitle(e.target.value)} onBlur={handleBlur} />
+                {errorMessageTitle && <Field.ErrorText>{errorMessageTitle}</Field.ErrorText>}
+            </Field.Root>
+            <Field.Root>
+                <Field.Label>Due Date:</Field.Label>
+                <Input name="dueDateInput" type="datetime-local" value={dueDate} onChange={(e) => setDueDate(e.target.value)} onBlur={handleBlur} />
+                {errorMessageDueDate && <Field.ErrorText>{errorMessageDueDate}</Field.ErrorText>}
+            </Field.Root>
+            <Field.Root>
+                <Field.Label> Frequency:</Field.Label>
+                <NativeSelect.Root>
+                    <NativeSelect.Field value={frequency} onChange={(e) => setFrequency(e.target.value)}>
+                        <option value="none">None</option>
+                        <option value="daily">Daily</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                    </NativeSelect.Field>
+                </NativeSelect.Root>
+            </Field.Root>
+            <Field.Root>
+                <Field.Label>Priority:</Field.Label>
+                <NativeSelect.Root>
+                    <NativeSelect.Field value={priority} onChange={(e) => setPriority(e.target.value)}>
+                        <option value="none">None</option>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                        <option value="top">Top</option>
+                    </NativeSelect.Field>
+                </NativeSelect.Root>
+            </Field.Root>
+            <Field.Root>
+                <Field.Label>Group:</Field.Label>
+                <NativeSelect.Root>
+                    <NativeSelect.Field value={group} onChange={(e) => setGroup(e.target.value)}>
+                        <option value="">No group</option>
+                        {groups.map((g) => (
+                            <option key={g._id} value={g._id}>{g.title}</option>
+                        ))}
+                    </NativeSelect.Field>
+                </NativeSelect.Root>
+            </Field.Root>
+            <Button onClick={handleSubmit}>Submit</Button>
+            <Button onClick={() => { setTitle(''); setFrequency('none'); setDueDate(''); setPriority('none'); setGroup(''); }}>Cancel</Button>
+        </Box>
     )
 }
 

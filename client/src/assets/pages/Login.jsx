@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Box, Button, Field, Input } from '@chakra-ui/react'
 
 // standard regex email validation
 const validateEmail = (email) => {
@@ -58,18 +59,19 @@ const Login = () => {
     };
 
     return (
-        <form onSubmit={(e) => e.preventDefault()}>
-            <label>
-                Email: <input name="emailInput" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={handleBlur} />
-                {errorMessageEmail && <p className="error-message">{errorMessageEmail}</p>}
-            </label>
-            <label>
-                Password: <input name="passwordInput" type="password" value={password} onChange={(e) => setPassword(e.target.value)} onBlur={handleBlur} />
-                {errorMessagePassword && <p className="error-message">{errorMessagePassword}</p>}
-            </label>
-            <button className="submitButton" type="button" onClick={handleSubmit}>Submit</button>
-            <button className="cancelButton" type="button">Cancel</button>
-        </form>
+        <Box as="form" onSubmit={(e) => e.preventDefault()}>
+            <Field.Root>
+                <Field.Label> Email: </Field.Label>
+                <Input name="emailInput" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={handleBlur} />
+                {errorMessageEmail && <Field.ErrorText>{errorMessageEmail}</Field.ErrorText>}
+            </Field.Root>
+            <Field.Root>
+                <Field.Label>Password:</Field.Label>
+                <Input name="passwordInput" type="password" value={password} onChange={(e) => setPassword(e.target.value)} onBlur={handleBlur} />
+                {errorMessagePassword && <Field.ErrorText>{errorMessagePassword}</Field.ErrorText>}
+            </Field.Root>
+            <Button onClick={handleSubmit}>Submit</Button>
+        </Box>
     )
 }
 

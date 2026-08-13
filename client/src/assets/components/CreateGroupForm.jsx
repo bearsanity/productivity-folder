@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { Box, Button, Field, Input } from '@chakra-ui/react'
 
-
-const CreateGroup = () => {
+const CreateGroup = ({ onGroupCreated }) => {
     //=================== Hooks ===================
     const [title, setTitle] = useState('');
     const [color, setColor] = useState('#000000');
@@ -29,7 +29,7 @@ const CreateGroup = () => {
                     'Authorization': `Bearer ${localStorage.getItem('token')}` // JWT token for the auth middleware
                 },
 
-                 // spread pattern says "if group has a value, include it; if it's empty, don't send it at all." That way Mongoose never sees the field and won't try to cast it
+                // spread pattern says "if group has a value, include it; if it's empty, don't send it at all." That way Mongoose never sees the field and won't try to cast it
                 body: JSON.stringify({ title, color }) // converts state values to JSON string
             });
             if (!response.ok) {
@@ -38,24 +38,27 @@ const CreateGroup = () => {
             const data = await response.json();
             console.log(data);
             setTitle('');
-            setColor('none');
+            setColor('#000000');
+            onGroupCreated();
         } catch (err) {
             console.error(err.message);
         }
     };
 
     return (
-        <form onSubmit={(e) => e.preventDefault()}>
-            <label>
-                Title: <input name="titleInput" value={title} onChange={(e) => setTitle(e.target.value)} onBlur={handleBlur} />
-                {errorMessageTitle && <p className="error-message">{errorMessageTitle}</p>}
-            </label>
-            <label>
-                Color: <input name="colorInput" type="color" value={color} onChange={(e) => setColor(e.target.value)} />
-            </label>
-            <button className="submitButton" type="button" onClick={handleSubmit}>Submit</button>
-            <button className="cancelButton" type="button">Cancel</button>
-        </form>
+        <Box as="form" onSubmit={(e) => e.preventDefault()}>
+            <Field.Root>
+                <Field.Label>Title:</Field.Label>
+                <Input name="titleInput" value={title} onChange={(e) => setTitle(e.target.value)} onBlur={handleBlur} />
+                {errorMessageTitle && <Field.ErrorText>{errorMessageTitle}</Field.ErrorText>}
+            </Field.Root>
+            <Field.Root>
+                <Field.Label>Color:</Field.Label>
+                <Input name="colorInput" type="color" value={color} onChange={(e) => setColor(e.target.value)} />
+            </Field.Root>
+            <Button onClick={handleSubmit}>Submit</Button>
+            <Button onClick={() => { setTitle(''); setColor('#000000') }}>Cancel</Button>
+        </Box>
     )
 }
 
