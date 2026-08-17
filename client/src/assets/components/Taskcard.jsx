@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import CalendarHeatmap from './CalendarHeatmap'
-import { Box, Button, Text, Heading, Input, NativeSelect, Field } from '@chakra-ui/react' //for styling
+import { Box, Button, Text, Heading, Input, NativeSelect, Field, Flex } from '@chakra-ui/react' //for styling
 
 const Taskcard = ({ task, onTaskUpdated, groups }) => {
 
@@ -82,7 +82,7 @@ const Taskcard = ({ task, onTaskUpdated, groups }) => {
     //==============================================TaskCard==============================================
     //====================================================================================================
     return (
-        <Box>
+        <Box borderWidth="1px" borderRadius="md" padding={4}>
             {isEditing ? (
                 <Box>
                     <Field.Root>
@@ -136,12 +136,14 @@ const Taskcard = ({ task, onTaskUpdated, groups }) => {
             ) : (
                 <Box>
                     <Heading onClick={() => setIsExpanded(!isExpanded)}>{task.title}</Heading>
-                    <Text>{task.dueDate}</Text>
+                    <Text>{new Date(task.dueDate).toLocaleString()}</Text>
                     <Text>{task.priority}</Text>
                     <Text>{task.frequency}</Text>
-                    <Button onClick={handleComplete}>Complete!</Button>
-                    <Button onClick={() => setIsEditing(true)}>Edit</Button>
-                    <Button onClick={handleDelete}>Delete</Button>
+                    <Flex gap={2}>
+                        <Button onClick={handleComplete}>Complete!</Button>
+                        <Button onClick={() => setIsEditing(true)}>Edit</Button>
+                        <Button onClick={handleDelete}>Delete</Button>
+                    </Flex>
                 </Box>
             )}
             {/* && is short circuit evaluation, if is Expanded is true, it proceeds with the heatmap, if not, it stops */}

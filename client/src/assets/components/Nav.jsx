@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { Box, Button } from '@chakra-ui/react'
 
 const handleLogout = () => {
   localStorage.removeItem('token');
@@ -9,11 +10,11 @@ function Nav() {
     const isLoggedIn = localStorage.getItem('token');
 
     return (
-        <nav>
+        <Box as="nav">
             {isLoggedIn ? (
                 <>
                     <NavLink to="/">Home</NavLink>
-                    <button onClick={handleLogout}>Logout</button>
+                    <Button onClick={handleLogout}>Logout</Button>
                 </>
             ) : (
                 <>
@@ -21,7 +22,7 @@ function Nav() {
                     <NavLink to="/signup">Sign Up</NavLink>
                 </>
             )}
-        </nav>
+        </Box>
     );
 };
 

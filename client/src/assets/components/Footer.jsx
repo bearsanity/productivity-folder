@@ -1,15 +1,15 @@
-import { Link } from 'react-router-dom';
 
+import { Box, Text, Flex } from '@chakra-ui/react'
 
 function Footer() {
     return (
-        <footer>
-            <div className="footer-links">
+        <Box as="footer">
+            <Flex gap={4}>
                 <a href='https://github.com/bearsanity' target="_blank" rel="noopener noreferrer"> Github </a>
                 <a href='https://www.linkedin.com/in/james-sweeney-304905206/' target="_blank" rel="noopener noreferrer"> LinkedIn </a>
-            </div>
-            <p className="footer-text">&copy; 2026 James Sweeney. All rights reserved.</p>
-        </footer>
+            </Flex>
+            <Text >&copy; 2026 James Sweeney. All rights reserved.</Text>
+        </Box>
     );
 }
 

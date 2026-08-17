@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button, Field, Input, NativeSelect } from '@chakra-ui/react'
+import { Box, Button, Field, Input, NativeSelect, Heading } from '@chakra-ui/react'
 
 const CreateTask = ({ onTaskCreated, groups }) => {
     //=================== Hooks ===================
@@ -61,6 +61,7 @@ const CreateTask = ({ onTaskCreated, groups }) => {
 
     return (
         <Box as="form" onSubmit={(e) => e.preventDefault()}>
+            <Heading as="h3">Create Task:</Heading>
             <Field.Root>
                 <Field.Label>Title:</Field.Label>
                 <Input name="titleInput" value={title} onChange={(e) => setTitle(e.target.value)} onBlur={handleBlur} />

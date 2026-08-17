@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button, Field, Input } from '@chakra-ui/react'
+import { Box, Button, Field, Input, Heading } from '@chakra-ui/react'
 
 const CreateGroup = ({ onGroupCreated }) => {
     //=================== Hooks ===================
@@ -47,6 +47,7 @@ const CreateGroup = ({ onGroupCreated }) => {
 
     return (
         <Box as="form" onSubmit={(e) => e.preventDefault()}>
+            <Heading as="h3">Create Group:</Heading>
             <Field.Root>
                 <Field.Label>Title:</Field.Label>
                 <Input name="titleInput" value={title} onChange={(e) => setTitle(e.target.value)} onBlur={handleBlur} />

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import CreateTask from '../components/CreateTaskForm';
 import CreateGroup from '../components/CreateGroupForm';
 import Taskcard from '../components/Taskcard';
+import { Flex, Heading, Box } from '@chakra-ui/react'
 
 
 function Dashboard() {
@@ -54,23 +55,24 @@ function Dashboard() {
         fetchGroups();
     }, []);
     return (
-        <div>
-            <h1>Dashboard</h1>
+        <Flex direction="column" gap={4} padding={6} maxWidth="800px" margin="0 auto">
+            <Heading as="h2">Groups</Heading>
             {groups.map((g) => (
-                <div key={g._id}>
-                    <h3 onClick={() => toggleGroup(g._id)}>{g.title}</h3>
+                <Box key={g._id}>
+                    <Heading as="h3" onClick={() => toggleGroup(g._id)}>{g.title}</Heading>
                     {openGroups[g._id] && tasks.filter(task => task.group === g._id).map(task => (
                         <Taskcard key={task._id} task={task} onTaskUpdated={fetchTasks} groups={groups}/>
                     ))}
-                </div>
+                </Box>
             ))}
             {/* For ungrouped tasks */}
+            <Heading as="h4">Ungrouped Tasks</Heading>
             {tasks.filter(task => !task.group).map(task => (
                 <Taskcard key={task._id} task={task} onTaskUpdated={fetchTasks} groups={groups}/>
             ))}
             <CreateTask onTaskCreated={fetchTasks} groups={groups} /> {/*so the dashboard refreshes on task creation*/}
             <CreateGroup onGroupCreated={fetchGroups} />
-        </div>
+        </Flex>
     );
 }
 

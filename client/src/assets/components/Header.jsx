@@ -1,11 +1,12 @@
 import Nav from "./Nav";
+import { Box, Heading } from '@chakra-ui/react'
 
 function Header() {
     return (
-        <header>
-            <h1>Productivity <span>Board</span></h1>
+        <Box as="header">
+            <Heading>Productivity <span>Board</span></Heading>
             <Nav />
-        </header>
+        </Box>
     );
 }
 
