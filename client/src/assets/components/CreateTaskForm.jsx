@@ -76,7 +76,7 @@ const CreateTask = ({ onTaskCreated, groups }) => {
                 <Field.Label> Frequency:</Field.Label>
                 <NativeSelect.Root>
                     <NativeSelect.Field value={frequency} onChange={(e) => setFrequency(e.target.value)}>
-                        <option value="none">None</option>
+                        <option value="none">Don't Repeat</option>
                         <option value="daily">Daily</option>
                         <option value="weekly">Weekly</option>
                         <option value="monthly">Monthly</option>

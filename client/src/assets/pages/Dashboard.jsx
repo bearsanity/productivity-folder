@@ -10,6 +10,7 @@ function Dashboard() {
     const [tasks, setTasks] = useState([]);
     const [groups, setGroups] = useState([]);
     const [openGroups, setOpenGroups] = useState({});
+    const [showCreateTask, setShowCreateTask] = useState(false); //create task window visibility
 
     const fetchTasks = async () => {
         try {
