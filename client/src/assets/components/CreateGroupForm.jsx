@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Box, Button, Field, Input, Heading } from '@chakra-ui/react'
 
-const CreateGroup = ({ onGroupCreated }) => {
+const CreateGroup = ({ onGroupCreated, onCancel }) => {
     //=================== Hooks ===================
     const [title, setTitle] = useState('');
     const [color, setColor] = useState('#000000');
@@ -58,7 +58,7 @@ const CreateGroup = ({ onGroupCreated }) => {
                 <Input name="colorInput" type="color" value={color} onChange={(e) => setColor(e.target.value)} />
             </Field.Root>
             <Button onClick={handleSubmit}>Submit</Button>
-            <Button onClick={() => { setTitle(''); setColor('#000000') }}>Cancel</Button>
+            <Button onClick={() => { setTitle(''); setColor('#000000'); onCancel(); }}>Cancel</Button>
         </Box>
     )
 }

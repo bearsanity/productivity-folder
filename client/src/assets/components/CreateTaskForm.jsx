@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Box, Button, Field, Input, NativeSelect, Heading } from '@chakra-ui/react'
 
-const CreateTask = ({ onTaskCreated, groups }) => {
+const CreateTask = ({ onTaskCreated, groups, onCancel }) => {
     //=================== Hooks ===================
     const [title, setTitle] = useState('');
     const [frequency, setFrequency] = useState('none');
@@ -108,7 +108,7 @@ const CreateTask = ({ onTaskCreated, groups }) => {
                 </NativeSelect.Root>
             </Field.Root>
             <Button onClick={handleSubmit}>Submit</Button>
-            <Button onClick={() => { setTitle(''); setFrequency('none'); setDueDate(''); setPriority('none'); setGroup(''); }}>Cancel</Button>
+            <Button onClick={() => { setTitle(''); setFrequency('none'); setDueDate(''); setPriority('none'); setGroup(''); onCancel(); }}>Cancel</Button>
         </Box>
     )
 }

@@ -59,7 +59,7 @@ const Login = () => {
     };
 
     return (
-        <Box as="form" onSubmit={(e) => e.preventDefault()}>
+        <Box as="form" maxWidth="300px" onSubmit={(e) => e.preventDefault()}>
             <Field.Root>
                 <Field.Label> Email: </Field.Label>
                 <Input name="emailInput" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={handleBlur} />

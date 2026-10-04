@@ -4,7 +4,7 @@ import { Box, Heading } from '@chakra-ui/react'
 function Header() {
     return (
         <Box as="header">
-            <Heading>Productivity <span>Board</span></Heading>
+            <Heading paddingTop={4}>Productivity <span>Board</span></Heading>
             <Nav />
         </Box>
     );

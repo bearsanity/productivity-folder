@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import CreateTask from '../components/CreateTaskForm';
 import CreateGroup from '../components/CreateGroupForm';
 import Taskcard from '../components/Taskcard';
-import { Flex, Heading, Box } from '@chakra-ui/react'
+import { Flex, Heading, Box, Button } from '@chakra-ui/react'
 
 
 function Dashboard() {
@@ -11,6 +11,7 @@ function Dashboard() {
     const [groups, setGroups] = useState([]);
     const [openGroups, setOpenGroups] = useState({});
     const [showCreateTask, setShowCreateTask] = useState(false); //create task window visibility
+    const [showCreateGroup, setShowCreateGroup] = useState(false); //create group window visibility
 
     const fetchTasks = async () => {
         try {
@@ -69,10 +70,12 @@ function Dashboard() {
             {/* For ungrouped tasks */}
             <Heading as="h4">Ungrouped Tasks</Heading>
             {tasks.filter(task => !task.group).map(task => (
-                <Taskcard key={task._id} task={task} onTaskUpdated={fetchTasks} groups={groups}/>
+                <Taskcard key={task._id} task={task} onTaskUpdated={fetchTasks} groups={groups} />
             ))}
-            <CreateTask onTaskCreated={fetchTasks} groups={groups} /> {/*so the dashboard refreshes on task creation*/}
-            <CreateGroup onGroupCreated={fetchGroups} />
+            <Button onClick={() => setShowCreateTask(true)}>New Task</Button>
+            {showCreateTask && <CreateTask onTaskCreated={() => { fetchTasks(); setShowCreateTask(false); } } groups={groups} onCancel={() => setShowCreateTask(false)} />} {/*so the dashboard refreshes on task creation*/}
+            <Button onClick={() => setShowCreateGroup(true)}>New Group</Button>
+            {showCreateGroup && <CreateGroup onGroupCreated={() => { fetchGroups(); setShowCreateGroup(false); }} onCancel={() => setShowCreateGroup(false)} />}
         </Flex>
     );
 }
