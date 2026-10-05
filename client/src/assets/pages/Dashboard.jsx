@@ -12,6 +12,7 @@ function Dashboard() {
     const [openGroups, setOpenGroups] = useState({});
     const [showCreateTask, setShowCreateTask] = useState(false); //create task window visibility
     const [showCreateGroup, setShowCreateGroup] = useState(false); //create group window visibility
+    const [showUngroupedTasks, setShowUngroupedTasks] = useState(false); //ungrouped tasks visibility
 
     const fetchTasks = async () => {
         try {
@@ -61,15 +62,17 @@ function Dashboard() {
             <Heading as="h2">Groups</Heading>
             {groups.map((g) => (
                 <Box key={g._id}>
-                    <Heading as="h3" onClick={() => toggleGroup(g._id)}>{g.title}</Heading>
+                    <Heading as="h3" cursor="pointer" onClick={() => toggleGroup(g._id)}>{g.title}</Heading>
                     {openGroups[g._id] && tasks.filter(task => task.group === g._id).map(task => (
                         <Taskcard key={task._id} task={task} onTaskUpdated={fetchTasks} groups={groups}/>
                     ))}
                 </Box>
             ))}
             {/* For ungrouped tasks */}
-            <Heading as="h4">Ungrouped Tasks</Heading>
-            {tasks.filter(task => !task.group).map(task => (
+            <Heading as="h4" cursor="pointer" onClick={() => setShowUngroupedTasks(!showUngroupedTasks)}>
+                Ungrouped Tasks
+            </Heading>
+            {showUngroupedTasks && tasks.filter(task => !task.group).map(task => (
                 <Taskcard key={task._id} task={task} onTaskUpdated={fetchTasks} groups={groups} />
             ))}
             <Button onClick={() => setShowCreateTask(true)}>New Task</Button>
