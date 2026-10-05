@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import CalendarHeatmap from './CalendarHeatmap'
 import { Box, Button, Text, Heading, Input, NativeSelect, Field, Flex } from '@chakra-ui/react' //for styling
+import { isCompletedForPeriod } from '../../utils/taskUtils';
 
 const Taskcard = ({ task, onTaskUpdated, groups }) => {
 
@@ -11,6 +12,8 @@ const Taskcard = ({ task, onTaskUpdated, groups }) => {
     const [editFrequency, setEditFrequency] = useState(task.frequency);
     const [editGroup, setEditGroup] = useState(task.group || '');
     const [isExpanded, setIsExpanded] = useState(false)
+
+    const isDone = isCompletedForPeriod(task.frequency, task.completionHistory);
 
     //=============================================================================================================
     //==============================================Handler Functions==============================================
@@ -82,7 +85,13 @@ const Taskcard = ({ task, onTaskUpdated, groups }) => {
     //==============================================TaskCard==============================================
     //====================================================================================================
     return (
-        <Box borderWidth="1px" borderRadius="md" padding={4}>
+        <Box 
+            borderWidth="1px" 
+            borderRadius="md" 
+            padding={4}
+            borderColor={isDone ? 'green.400' : 'gray.300'}
+            backgroundColor={isDone ? 'green.200' : 'gray.300'}
+        >
             {isEditing ? (
                 <Box>
                     <Field.Root>
@@ -135,7 +144,9 @@ const Taskcard = ({ task, onTaskUpdated, groups }) => {
                 </Box>
             ) : (
                 <Box>
-                    <Heading onClick={() => setIsExpanded(!isExpanded)}>{task.title}</Heading>
+                    <Heading color="black"   textShadow="1px 1px 0 black, 1px -1px 0 black, -1px 1px 0 black, -1px -1px 0 black" >
+                        {task.title}
+                    </Heading>
                     <Text>{new Date(task.dueDate).toLocaleString()}</Text>
                     <Text>{task.priority}</Text>
                     <Text>{task.frequency}</Text>

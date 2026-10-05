@@ -5,7 +5,9 @@ const CreateTask = ({ onTaskCreated, groups, onCancel }) => {
     //=================== Hooks ===================
     const [title, setTitle] = useState('');
     const [frequency, setFrequency] = useState('none');
-    const [dueDate, setDueDate] = useState('');
+    const [dueDate, setDueDate] = useState(
+        new Date().toISOString().split('T')[0] + 'T23:59'
+    );
     const [priority, setPriority] = useState('none');
     const [group, setGroup] = useState('');
     const [errorMessageTitle, setErrorMessageTitle] = useState('');
