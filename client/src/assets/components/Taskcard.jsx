@@ -85,9 +85,9 @@ const Taskcard = ({ task, onTaskUpdated, groups }) => {
     //==============================================TaskCard==============================================
     //====================================================================================================
     return (
-        <Box 
-            borderWidth="1px" 
-            borderRadius="md" 
+        <Box
+            borderWidth="1px"
+            borderRadius="md"
             padding={4}
             borderColor={isDone ? 'green.400' : 'gray.300'}
             backgroundColor={isDone ? 'green.900' : 'transparent'}
@@ -144,18 +144,22 @@ const Taskcard = ({ task, onTaskUpdated, groups }) => {
                     <Button className="cancelButton" type="button" onClick={() => setIsEditing(false)}>Cancel</Button>
                 </Box>
             ) : (
-                <Box>
-                    <Heading   textShadow="1px 1px 0 black, 1px -1px 0 black, -1px 1px 0 black, -1px -1px 0 black" >
+                <Box marginBottom={3} padding={2}>
+
+                    <Heading color='white' >
                         {task.title}
                     </Heading>
+
                     <Text>{new Date(task.dueDate).toLocaleString()}</Text>
-            {task.priority !== 'none'&& <Text>{task.priority}</Text>}
-                    <Text>{task.frequency}</Text>
-                    <Flex gap={2}>
+                    {task.priority !== 'none' && <Text textTransform='capitalize' >Priority: {task.priority}</Text>}
+                    {task.frequency !== 'none' && <Text textTransform='capitalize' >Frequency: {task.frequency}</Text>}
+
+                    <Flex gap={2} justifyContent="center" alignItems="center">
                         <Button onClick={handleComplete}>Complete!</Button>
                         <Button onClick={() => setIsEditing(true)}>Edit</Button>
                         <Button onClick={handleDelete}>Delete</Button>
                     </Flex>
+
                 </Box>
             )}
             {/* && is short circuit evaluation, if is Expanded is true, it proceeds with the heatmap, if not, it stops */}
