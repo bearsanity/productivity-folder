@@ -62,7 +62,7 @@ function Dashboard() {
             <Heading as="h2">Groups</Heading>
             {groups.map((g) => (
                 <Box key={g._id}>
-                    <Heading as="h3" color="black" cursor="pointer" backgroundColor={g.color} borderRadius="md" padding={1} onClick={() => toggleGroup(g._id)}>{g.title}</Heading>
+                    <Heading as="h3" color="black" cursor="pointer" backgroundColor={g.color} borderRadius="md" padding={2} paddingLeft={2} onClick={() => toggleGroup(g._id)}>{g.title}</Heading>
                     {openGroups[g._id] && tasks.filter(task => task.group === g._id).map(task => (
                         <Taskcard key={task._id} task={task} onTaskUpdated={fetchTasks} groups={groups} />
                     ))}
@@ -78,8 +78,8 @@ function Dashboard() {
 
             {/* {-------------- BUTTONS --------------} */}
             <Flex gap={2} justifyContent="center" alignItems="center">
-                <Button variant='outline' colorPalette='black' onClick={() => setShowCreateTask(true)}>New Task</Button>
-                <Button variant='outline' colorPalette='black' onClick={() => setShowCreateGroup(true)}>New Group</Button>
+                <Button variant='ghost' colorPalette='black' onClick={() => setShowCreateTask(true)}>New Task</Button>
+                <Button variant='ghost' colorPalette='black' onClick={() => setShowCreateGroup(true)}>New Group</Button>
             </Flex>
 
             {showCreateTask && <CreateTask onTaskCreated={() => { fetchTasks(); setShowCreateTask(false); }} groups={groups} onCancel={() => setShowCreateTask(false)} />} {/*so the dashboard refreshes on task creation*/}
