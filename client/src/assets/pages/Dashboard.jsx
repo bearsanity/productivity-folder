@@ -58,27 +58,29 @@ function Dashboard() {
         fetchGroups();
     }, []);
     return (
-        <Flex direction="column" gap={4} padding={6} maxWidth="800px" margin="0 auto">
+        <Flex direction="column" gap={4} padding={6} maxWidth="800px" margin="0 auto" >
             <Heading as="h2">Groups</Heading>
             {groups.map((g) => (
                 <Box key={g._id}>
-                    <Heading as="h3" cursor="pointer" onClick={() => toggleGroup(g._id)}>{g.title}</Heading>
+                    <Heading as="h3" color="white" cursor="pointer" backgroundColor={g.color} borderRadius="md" padding={1} onClick={() => toggleGroup(g._id)}>{g.title}</Heading>
                     {openGroups[g._id] && tasks.filter(task => task.group === g._id).map(task => (
                         <Taskcard key={task._id} task={task} onTaskUpdated={fetchTasks} groups={groups}/>
                     ))}
                 </Box>
             ))}
             {/* For ungrouped tasks */}
-            <Heading as="h4" cursor="pointer" onClick={() => setShowUngroupedTasks(!showUngroupedTasks)}>
+            <Heading as="h4" color="white" cursor="pointer" borderRadius="md" padding={1} onClick={() => setShowUngroupedTasks(!showUngroupedTasks)}>
                 Ungrouped Tasks
             </Heading>
             {showUngroupedTasks && tasks.filter(task => !task.group).map(task => (
                 <Taskcard key={task._id} task={task} onTaskUpdated={fetchTasks} groups={groups} />
             ))}
-            <Button onClick={() => setShowCreateTask(true)}>New Task</Button>
-            {showCreateTask && <CreateTask onTaskCreated={() => { fetchTasks(); setShowCreateTask(false); } } groups={groups} onCancel={() => setShowCreateTask(false)} />} {/*so the dashboard refreshes on task creation*/}
-            <Button onClick={() => setShowCreateGroup(true)}>New Group</Button>
-            {showCreateGroup && <CreateGroup onGroupCreated={() => { fetchGroups(); setShowCreateGroup(false); }} onCancel={() => setShowCreateGroup(false)} />}
+            <Flex gap={2}  justifyContent="center" alignItems="center">
+                <Button variant='outline'  colorPalette='blue' onClick={() => setShowCreateTask(true)}>New Task</Button>
+                {showCreateTask && <CreateTask onTaskCreated={() => { fetchTasks(); setShowCreateTask(false); } } groups={groups} onCancel={() => setShowCreateTask(false)} />} {/*so the dashboard refreshes on task creation*/}
+                <Button variant='outline'  colorPalette='blue' onClick={() => setShowCreateGroup(true)}>New Group</Button>
+                {showCreateGroup && <CreateGroup onGroupCreated={() => { fetchGroups(); setShowCreateGroup(false); }} onCancel={() => setShowCreateGroup(false)} />}
+            </Flex>
         </Flex>
     );
 }

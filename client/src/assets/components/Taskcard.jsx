@@ -90,7 +90,8 @@ const Taskcard = ({ task, onTaskUpdated, groups }) => {
             borderRadius="md" 
             padding={4}
             borderColor={isDone ? 'green.400' : 'gray.300'}
-            backgroundColor={isDone ? 'green.200' : 'gray.300'}
+            backgroundColor={isDone ? 'green.900' : 'transparent'}
+            textAlign='left'
         >
             {isEditing ? (
                 <Box>
@@ -144,11 +145,11 @@ const Taskcard = ({ task, onTaskUpdated, groups }) => {
                 </Box>
             ) : (
                 <Box>
-                    <Heading color="black"   textShadow="1px 1px 0 black, 1px -1px 0 black, -1px 1px 0 black, -1px -1px 0 black" >
+                    <Heading   textShadow="1px 1px 0 black, 1px -1px 0 black, -1px 1px 0 black, -1px -1px 0 black" >
                         {task.title}
                     </Heading>
                     <Text>{new Date(task.dueDate).toLocaleString()}</Text>
-                    <Text>{task.priority}</Text>
+            {task.priority !== 'none'&& <Text>{task.priority}</Text>}
                     <Text>{task.frequency}</Text>
                     <Flex gap={2}>
                         <Button onClick={handleComplete}>Complete!</Button>

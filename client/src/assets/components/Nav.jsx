@@ -13,7 +13,7 @@ function Nav() {
         <Box as="nav">
             {isLoggedIn ? (
                 <Flex gap={4}>
-                    <NavLink to="/">Home</NavLink>
+                    {/* <NavLink to="/">Home</NavLink> */}
                     <Button onClick={handleLogout}>Logout</Button>
                 </Flex>
             ) : (

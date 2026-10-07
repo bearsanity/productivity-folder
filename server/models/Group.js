@@ -7,7 +7,7 @@ const Group = new Schema({
     type: String,
     required: true
   },
-  colour: { 
+  color: { 
     type: String,
     default: null
   },

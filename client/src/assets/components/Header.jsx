@@ -1,12 +1,12 @@
 import Nav from "./Nav";
-import { Box, Heading } from '@chakra-ui/react'
+import { Box, Heading, Flex } from '@chakra-ui/react'
 
 function Header() {
     return (
-        <Box as="header">
+        <Flex as="header" justifyContent="space-between" >
             <Heading paddingTop={4}>Productivity <span>Board</span></Heading>
             <Nav />
-        </Box>
+        </Flex>
     );
 }
 
