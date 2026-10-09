@@ -2,6 +2,7 @@ import { useState } from 'react';
 import CalendarHeatmap from './CalendarHeatmap'
 import { Box, Button, Text, Heading, Input, NativeSelect, Field, Flex } from '@chakra-ui/react' //for styling
 import { isCompletedForPeriod } from '../../utils/taskUtils';
+import { FaCheck, FaPen, FaTrash } from 'react-icons/fa'; /* for taskcard button icons */
 
 const Taskcard = ({ task, onTaskUpdated, groups }) => {
 
@@ -144,27 +145,28 @@ const Taskcard = ({ task, onTaskUpdated, groups }) => {
                             </NativeSelect.Field>
                         </NativeSelect.Root>
                     </Field.Root>
-                    <Button className="submitButton" type="button" onClick={handleSubmit}>Save</Button>
-                    <Button className="cancelButton" type="button" onClick={() => setIsEditing(false)}>Cancel</Button>
+                    <Box alignItems="center" justifyContent="center" display="flex" gap={1} paddingTop={2}>
+                        <Button className="submitButton" type="button" onClick={handleSubmit}>Save</Button>
+                        <Button className="cancelButton" type="button" onClick={() => setIsEditing(false)}>Cancel</Button>
+                    </Box>
                 </Box>
             ) : (
-                <Box marginBottom={3} paddingTop={1}>
+                <Flex marginBottom={3} paddingTop={1} justifyContent="space-between" alignItems="center">
+                    <Box>
+                        <Heading color='black' marginLeft={4}>
+                            {task.title}
+                        </Heading>
+                        {task.priority !== 'none' && <Text textTransform='capitalize' >{task.priority} Priority</Text>}
+                        {task.frequency !== 'none' && <Text textTransform='capitalize' >Frequency: {task.frequency}</Text>}
+                        <Text>{new Date(task.dueDate).toLocaleString()}</Text>
+                    </Box>
 
-                    <Heading color='black' marginLeft={4}>
-                        {task.title}
-                    </Heading>
- 
-                    {task.priority !== 'none' && <Text textTransform='capitalize' >{task.priority} Priority</Text>}
-                    {task.frequency !== 'none' && <Text textTransform='capitalize' >Frequency: {task.frequency}</Text>}
-                    <Text>{new Date(task.dueDate).toLocaleString()}</Text>
-
-                    <Flex gap={2} paddingTop={3} justifyContent="center" alignItems="bottom">
-                        <Button onClick={handleComplete}>Complete!</Button>
-                        <Button onClick={() => setIsEditing(true)}>Edit</Button>
-                        <Button onClick={handleDelete}>Delete</Button>
+                    <Flex gap={2} >
+                        <Button size="sm" onClick={handleComplete}><FaCheck /></Button>
+                        <Button size="sm" onClick={() => setIsEditing(true)}><FaPen /></Button>
+                        <Button size="sm" onClick={handleDelete}><FaTrash /></Button>
                     </Flex>
-
-                </Box>
+                </Flex>
             )}
             {/* && is short circuit evaluation, if is Expanded is true, it proceeds with the heatmap, if not, it stops */}
             {isExpanded && <CalendarHeatmap completionHistory={task.completionHistory} />}
