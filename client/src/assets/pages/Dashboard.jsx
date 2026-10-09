@@ -49,6 +49,17 @@ function Dashboard() {
         setActiveGroup(prev => prev === groupId ? null : groupId);
     }
 
+    const getBgColor = () => {
+        const noActiveColor = '#ffbc3d'
+        if (!activeGroup) return `linear-gradient(to top right, ${noActiveColor}, ${noActiveColor}70 30%, ${noActiveColor}50 50%, ${noActiveColor}30)`;
+        const ungroupedColor = '#ffc75e'
+        if (activeGroup === 'ungrouped') return `linear-gradient(to top right, ${ungroupedColor}, ${ungroupedColor}70 30%, ${ungroupedColor}50 50%, ${ungroupedColor}30)`;
+        const color = groups.find(g => g._id === activeGroup)?.color;
+        return color
+            ? `linear-gradient(to top right, ${color}, ${color}70 30%, ${color}50 50%, ${color}30)`
+            : 'linear-gradient(to top right, #ffbc3d40, #ffbc3d20)';
+    }
+
     useEffect(() => {
         fetchTasks();
         fetchGroups();
@@ -101,10 +112,7 @@ function Dashboard() {
             {/* ================== VISIBLE TASKS SECTION ==================  */}
             
                 <Box
-                backgroundColor={
-                    !activeGroup ? '#ffbc3d'
-                    : activeGroup === 'ungrouped' ? '#ffc75e70' 
-                    : groups.find(g => g._id === activeGroup)?.color + '70'  }
+                background={getBgColor()}
                 borderRadius="30px 30px 10px 10px"
                 padding={4}
                 minHeight="600px"
