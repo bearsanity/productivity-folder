@@ -62,7 +62,7 @@ const CreateTask = ({ onTaskCreated, groups, onCancel }) => {
     };
 
     return (
-        <Box as="form" onSubmit={(e) => e.preventDefault()}>
+        <Box as="form" maxWidth="500px" margin="0 auto" onSubmit={(e) => e.preventDefault()}>
             <Heading as="h3">Create Task:</Heading>
             <Field.Root>
                 <Field.Label>Title:</Field.Label>
@@ -109,8 +109,10 @@ const CreateTask = ({ onTaskCreated, groups, onCancel }) => {
                     </NativeSelect.Field>
                 </NativeSelect.Root>
             </Field.Root>
-            <Button onClick={handleSubmit}>Submit</Button>
-            <Button onClick={() => { setTitle(''); setFrequency('none'); setDueDate(''); setPriority('none'); setGroup(''); onCancel(); }}>Cancel</Button>
+            <Box justifyContent="center" alignItems="center" display="flex" gap={1} paddingTop={3}>
+                <Button variant="ghost" onClick={handleSubmit}>Submit</Button>
+                <Button variant="ghost" onClick={() => { setTitle(''); setFrequency('none'); setDueDate(''); setPriority('none'); setGroup(''); onCancel(); }}>Cancel</Button>
+            </Box>
         </Box>
     )
 }

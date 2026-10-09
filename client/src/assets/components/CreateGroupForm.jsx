@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Box, Button, Field, Input, Heading } from '@chakra-ui/react'
+import { Box, Button, Field, Input, Heading, Flex} from '@chakra-ui/react'
 
 const CreateGroup = ({ onGroupCreated, onCancel }) => {
     //=================== Hooks ===================
     const [title, setTitle] = useState('');
     const [color, setColor] = useState('#000000');
     const [errorMessageTitle, setErrorMessageTitle] = useState('');
+    const colorOptions = [ '#fff7f0', '#8b8fb0',  '#ffe8dc', "#a6c7e7", "#c3deeb", "#87afbb",  "#c8dcbe", "#ffe5ba", "#ffcabb", "#ebaebc", "#c09dc3"]
 
 
     //Title and duedate cant be blank
@@ -46,7 +47,7 @@ const CreateGroup = ({ onGroupCreated, onCancel }) => {
     };
 
     return (
-        <Box as="form" onSubmit={(e) => e.preventDefault()}>
+        <Box as="form" maxWidth="500px" margin="0 auto" gap={4} onSubmit={(e) => e.preventDefault()}>
             <Heading as="h3">Create Group:</Heading>
             <Field.Root>
                 <Field.Label>Title:</Field.Label>
@@ -55,10 +56,25 @@ const CreateGroup = ({ onGroupCreated, onCancel }) => {
             </Field.Root>
             <Field.Root>
                 <Field.Label>Color:</Field.Label>
-                <Input name="colorInput" type="color" value={color} onChange={(e) => setColor(e.target.value)} />
+                <Flex gap={2} flexWrap="wrap">
+                    {colorOptions.map((c) => (
+                        <Box
+                            key={c}
+                            backgroundColor={c}
+                            width="32px"
+                            height="32px"
+                            borderRadius="full"
+                            cursor="pointer"
+                            border={color === c ? "3px solid black" : "2px solid transparent"}
+                            onClick={() => setColor(c)}
+                        />
+                    ))}
+                </Flex>
             </Field.Root>
-            <Button onClick={handleSubmit}>Submit</Button>
-            <Button onClick={() => { setTitle(''); setColor('#000000'); onCancel(); }}>Cancel</Button>
+            <Box justifyContent="center" alignItems="center" display="flex" gap={1} paddingTop={3}>
+                <Button variant="ghost" onClick={handleSubmit}>Submit</Button>
+                <Button variant="ghost" onClick={() => { setTitle(''); setColor('#000000'); onCancel(); }}>Cancel</Button>
+            </Box>
         </Box>
     )
 }
