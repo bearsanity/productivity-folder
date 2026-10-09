@@ -59,6 +59,9 @@ function Dashboard() {
             ? `linear-gradient(to top right, ${color}, ${color}70 30%, ${color}50 50%, ${color}30)`
             : 'linear-gradient(to top right, #ffbc3d40, #ffbc3d20)';
     }
+    const getTabColor = (color) => {
+        return `linear-gradient(to top right, ${color}, ${color}70 49%, ${color}70 51%, ${color})`
+    }
 
     useEffect(() => {
         fetchTasks();
@@ -68,21 +71,19 @@ function Dashboard() {
         <Box padding={6} >
 
             {/* ================== TABS ================== */}
-            <Flex flexWrap="wrap" gap={2} maxWidth="800px" margin="0 auto" >
+            <Flex flexWrap="nowrap" overflowX="auto" gap={1} margin="0 auto" marginLeft='28px' marginRight='28px'>
                 {groups.map((g) => (
                     <Heading
                         as="h3"
                         color="black"
                         cursor="pointer"
                         key={g._id}
-                        backgroundColor={g.color}
+                        background={getTabColor(g.color)}
                         borderRadius="10px 10px 0 0"
                         borderBottom={activeGroup === g._id ? 'none' : '2px solid gray'}
                         borderLeft="2px solid gray"
                         minWidth="100px"
-                        justifyContent="center"
-                        alignItems="center"
-                        display="flex"
+                        textAlign="center"
                         padding={2}
                         paddingLeft={2}
                         fontSize="md"
@@ -97,11 +98,12 @@ function Dashboard() {
                 <Heading
                     as="h3"
                     color="black"
-                    backgroundColor="#ffc75e"
+                    background={getTabColor('#ffc75e')}
                     cursor="pointer"
                     borderRadius="10px 10px 0 0"
                     borderBottom={activeGroup === 'ungrouped' ? 'none' : '2px solid gray'}
                     borderLeft="2px solid gray"
+                    textAlign="center"
                     padding={2}
                     fontSize="md"
                     onClick={() => toggleGroup('ungrouped')}>
@@ -110,34 +112,38 @@ function Dashboard() {
             </Flex>
 
             {/* ================== VISIBLE TASKS SECTION ==================  */}
-            
-                <Box
+
+            <Box
                 background={getBgColor()}
                 borderRadius="30px 30px 10px 10px"
                 padding={4}
                 minHeight="600px"
                 borderLeft="3px solid gray"
-                >
-                    <Box maxWidth="800px"  justifyContent="center" margin="0 auto" display="flex" flexDirection="column" gap={1}>
+            >
+                <Box maxWidth="800px" justifyContent="center" margin="0 auto" display="flex" flexDirection="column" gap={1}>
                     {activeGroup === 'ungrouped' ? tasks.filter(task => !task.group).map(task => (
                         <Taskcard key={task._id} task={task} onTaskUpdated={fetchTasks} groups={groups} />
                     )) : tasks.filter(task => task.group === activeGroup).map(task => (
                         <Taskcard key={task._id} task={task} onTaskUpdated={fetchTasks} groups={groups} />
                     ))}
-                    </Box>
                 </Box>
-            
+            </Box>
+
 
             {/* ================== BUTTONS ==================  */}
-            <Flex gap={2} justifyContent="center" alignItems="center">
-                <Button variant='ghost' colorPalette='black' onClick={() => setShowCreateTask(true)}>New Task</Button>
-                <Button variant='ghost' colorPalette='black' onClick={() => setShowCreateGroup(true)}>New Group</Button>
-            </Flex>
+            <Box minHeight="500px" marginTop={2} marginBottom={2}>
+                <Flex gap={2} justifyContent="center" alignItems="top" >
+                    <Button variant='ghost' colorPalette='black' onClick={() => setShowCreateTask(!showCreateTask)}>New Task</Button>
+                    <Button variant='ghost' colorPalette='black' onClick={() => setShowCreateGroup(!showCreateGroup)}>New Group</Button>
+                </Flex>
 
-            {/* ================== CREATE FORMS ==================  */}
-            {showCreateTask && <CreateTask onTaskCreated={() => { fetchTasks(); setShowCreateTask(false); }} groups={groups} onCancel={() => setShowCreateTask(false)} />} {/*so the dashboard refreshes on task creation*/}
-            {showCreateGroup && <CreateGroup onGroupCreated={() => { fetchGroups(); setShowCreateGroup(false); }} onCancel={() => setShowCreateGroup(false)} />}
+                {/* ================== CREATE FORMS ==================  */}
+                {showCreateTask && <CreateTask onTaskCreated={() => { fetchTasks(); setShowCreateTask(false); }} groups={groups} onCancel={() => setShowCreateTask(false)} />} {/*so the dashboard refreshes on task creation*/}
+                {showCreateGroup && <CreateGroup onGroupCreated={() => { fetchGroups(); setShowCreateGroup(false); }} onCancel={() => setShowCreateGroup(false)} />}
+            </Box>
+
         </Box>
+
     );
 }
 
