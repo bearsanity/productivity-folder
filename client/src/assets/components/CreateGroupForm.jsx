@@ -6,7 +6,7 @@ const CreateGroup = ({ onGroupCreated, onCancel }) => {
     const [title, setTitle] = useState('');
     const [color, setColor] = useState('#000000');
     const [errorMessageTitle, setErrorMessageTitle] = useState('');
-    const colorOptions = [ '#fff7f0', '#8b8fb0',  '#ffe8dc', "#a6c7e7", "#c3deeb", "#87afbb",  "#c8dcbe", "#ffe5ba", "#ffcabb", "#ebaebc", "#c09dc3"]
+    const colorOptions = [ '#2297ff', '#9b3cc4', '#37ba35', '#f8001a', '#fd6f04', '#ffde01', '#ffde01', ]
 
 
     //Title and duedate cant be blank

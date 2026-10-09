@@ -89,12 +89,12 @@ const Taskcard = ({ task, onTaskUpdated, groups }) => {
             borderWidth="1px"
             borderRadius="md"
             padding={2}
-            borderBottomWidth="5px"
-            borderRightWidth="5px"
-            borderLeftWidth="2px"
-            borderTopWidth="2px"
+            borderBottomWidth="3px"
+            borderRightWidth="3px"
+            borderLeftWidth="7px"
+            borderTopWidth="3px"
             borderColor={isDone ? 'green.200' : 'gray.200'}
-            backgroundColor={isDone ? 'green.100' : 'transparent'}
+            backgroundColor={isDone ? 'green.100' : 'white'}
             textAlign='left'
         >
             {isEditing ? (

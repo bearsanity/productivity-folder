@@ -68,6 +68,10 @@ function Dashboard() {
                         borderRadius="10px 10px 0 0"
                         borderBottom={activeGroup === g._id ? 'none' : '2px solid gray'}
                         borderLeft="2px solid gray"
+                        minWidth="100px"
+                        justifyContent="center"
+                        alignItems="center"
+                        display="flex"
                         padding={2}
                         paddingLeft={2}
                         fontSize="md"
@@ -82,9 +86,11 @@ function Dashboard() {
                 <Heading
                     as="h3"
                     color="black"
+                    backgroundColor="#ffc75e"
                     cursor="pointer"
                     borderRadius="10px 10px 0 0"
                     borderBottom={activeGroup === 'ungrouped' ? 'none' : '2px solid gray'}
+                    borderLeft="2px solid gray"
                     padding={2}
                     fontSize="md"
                     onClick={() => toggleGroup('ungrouped')}>
@@ -93,14 +99,15 @@ function Dashboard() {
             </Flex>
 
             {/* ================== VISIBLE TASKS SECTION ==================  */}
-            {activeGroup && (
+            
                 <Box
-                backgroundColor={activeGroup === 'ungrouped' 
-                    ? 'gray.100' 
-                    : groups.find(g => g._id === activeGroup)?.color  }
+                backgroundColor={
+                    !activeGroup ? '#ffbc3d'
+                    : activeGroup === 'ungrouped' ? '#ffc75e70' 
+                    : groups.find(g => g._id === activeGroup)?.color + '70'  }
                 borderRadius="30px 30px 10px 10px"
                 padding={4}
-                minHeight="300px"
+                minHeight="600px"
                 borderLeft="3px solid gray"
                 >
                     <Box maxWidth="800px"  justifyContent="center" margin="0 auto" display="flex" flexDirection="column" gap={1}>
@@ -111,7 +118,7 @@ function Dashboard() {
                     ))}
                     </Box>
                 </Box>
-            )}
+            
 
             {/* ================== BUTTONS ==================  */}
             <Flex gap={2} justifyContent="center" alignItems="center">
