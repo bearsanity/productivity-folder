@@ -153,18 +153,20 @@ const Taskcard = ({ task, onTaskUpdated, groups }) => {
             ) : (
                 <Flex marginBottom={3} paddingTop={1} justifyContent="space-between" alignItems="center">
                     <Box>
-                        <Heading color='black' marginLeft={4}>
+                        <Heading color='black' marginLeft={1} onClick={() => setIsExpanded(!isExpanded)} cursor="pointer" fontSize="md" >
                             {task.title}
                         </Heading>
-                        {task.priority !== 'none' && <Text textTransform='capitalize' >{task.priority} Priority</Text>}
-                        {task.frequency !== 'none' && <Text textTransform='capitalize' >Frequency: {task.frequency}</Text>}
-                        <Text>{new Date(task.dueDate).toLocaleString()}</Text>
+                        <Box marginLeft={3}>
+                            {task.priority !== 'none' && <Text textTransform='capitalize' fontSize="small" >{task.priority} Priority</Text>}
+                            {task.frequency !== 'none' && <Text textTransform='capitalize' fontSize="small" >Frequency: {task.frequency}</Text>}
+                            <Text fontSize="small" >{new Date(task.dueDate).toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' })}</Text>
+                        </Box>
                     </Box>
 
                     <Flex gap={2} >
-                        <Button size="sm" onClick={handleComplete}><FaCheck /></Button>
-                        <Button size="sm" onClick={() => setIsEditing(true)}><FaPen /></Button>
-                        <Button size="sm" onClick={handleDelete}><FaTrash /></Button>
+                        <Button size="sm" variant="ghost" colorPalette="gray" onClick={handleComplete}><FaCheck /></Button>
+                        <Button size="sm" variant="ghost" colorPalette="gray" onClick={() => setIsEditing(true)}><FaPen /></Button>
+                        <Button size="sm" variant="ghost" colorPalette="gray" onClick={handleDelete}><FaTrash /></Button>
                     </Flex>
                 </Flex>
             )}
