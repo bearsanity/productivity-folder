@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import CreateTask from '../components/CreateTaskForm';
 import CreateGroup from '../components/CreateGroupForm';
 import Taskcard from '../components/Taskcard';
-import { Flex, Heading, Box, Button } from '@chakra-ui/react'
+import { Flex, Heading, Box, Button, Menu, Portal } from '@chakra-ui/react'
+import { FaEllipsisV, FaTrash, FaPen } from 'react-icons/fa';
+
 
 
 function Dashboard() {
@@ -12,6 +14,7 @@ function Dashboard() {
     const [activeGroup, setActiveGroup] = useState(null);
     const [showCreateTask, setShowCreateTask] = useState(false); //create task window visibility
     const [showCreateGroup, setShowCreateGroup] = useState(false); //create group window visibility
+
 
     const fetchTasks = async () => {
         try {
@@ -45,6 +48,53 @@ function Dashboard() {
         };
     }
 
+    const handleDeleteGroup = async (groupId) => {
+        const tasksInGroup = tasks.filter(task => task.group === groupId);
+
+        if (tasksInGroup.length > 0) {
+            const keepTasks = window.confirm(
+                'This group contains tasks. Click OK to move the tasks to the ungrouped section, or cancel to delete them.'
+            );
+            if (keepTasks) {
+                // Move tasks to ungrouped section
+                for (const task of tasksInGroup) {
+                    await fetch(`/api/tasks/${task._id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        },
+                        body: JSON.stringify({ group: null })
+                    });
+                }
+            } else {
+            //Delete all the tasks
+            for (const task of tasksInGroup) {
+                await fetch(`/api/tasks/${task._id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                });
+            }
+        }
+    }
+        // Delete the group
+        const response = await fetch(`/api/groups/${groupId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        });
+        if (!response.ok) throw new Error(`Response status: ${response.status}`);
+        fetchGroups();
+        fetchTasks();
+        if (activeGroup === groupId) {
+            setActiveGroup(null);
+        }
+    }
+
+
     const toggleGroup = (groupId) => {
         setActiveGroup(prev => prev === groupId ? null : groupId);
     }
@@ -63,6 +113,8 @@ function Dashboard() {
         return `linear-gradient(to top right, ${color}, ${color}70 49%, ${color}70 51%, ${color})`
     }
 
+
+    // Fetch tasks and groups on first load - [] ensure only on the first load
     useEffect(() => {
         fetchTasks();
         fetchGroups();
@@ -91,7 +143,6 @@ function Dashboard() {
                     >
                         {g.title}
                     </Heading>
-
                 ))}
 
                 {/* ================== UNGROUPED TAB ================== */}
@@ -119,13 +170,36 @@ function Dashboard() {
                 padding={4}
                 minHeight="600px"
                 borderLeft="3px solid gray"
+                position="relative"
             >
+                {activeGroup && activeGroup !== 'ungrouped' && (
+                    <Box position="absolute" top={2} right={2}>
+                        <Menu.Root>
+                            <Menu.Trigger asChild>
+                                <Button variant="ghost" size="xs" onClick={(e) => e.stopPropagation()}>
+                                    <FaEllipsisV />
+                                </Button>
+                            </Menu.Trigger>
+                            <Portal>
+                                <Menu.Positioner>
+                                    <Menu.Content>
+                                        <Menu.Item value="edit" onClick={() => handleEditGroup(activeGroup)}><FaPen />Edit</Menu.Item>
+                                        <Menu.Item value="delete" onClick={() => handleDeleteGroup(activeGroup)}><FaTrash />Delete</Menu.Item>
+                                    </Menu.Content>
+                                </Menu.Positioner>
+                            </Portal>
+                        </Menu.Root>
+                    </Box>
+                )}
+
+
                 <Box maxWidth="800px" justifyContent="center" margin="0 auto" display="flex" flexDirection="column" gap={1}>
-                    {activeGroup === 'ungrouped' ? tasks.filter(task => !task.group).map(task => (
+                    {activeGroup === 'ungrouped' 
+                    ? tasks.filter(task => !task.group).map(task => (
                         <Taskcard key={task._id} task={task} onTaskUpdated={fetchTasks} groups={groups} />
-                    )) : tasks.filter(task => task.group === activeGroup).map(task => (
+                    )) : activeGroup ? tasks.filter(task => task.group === activeGroup).map(task => (
                         <Taskcard key={task._id} task={task} onTaskUpdated={fetchTasks} groups={groups} />
-                    ))}
+                    )) : null }
                 </Box>
             </Box>
 
