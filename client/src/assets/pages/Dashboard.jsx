@@ -94,7 +94,6 @@ function Dashboard() {
         }
     }
 
-
     const toggleGroup = (groupId) => {
         setActiveGroup(prev => prev === groupId ? null : groupId);
     }
@@ -109,6 +108,7 @@ function Dashboard() {
             ? `linear-gradient(to top right, ${color}, ${color}70 30%, ${color}50 50%, ${color}30)`
             : 'linear-gradient(to top right, #ffbc3d40, #ffbc3d20)';
     }
+    
     const getTabColor = (color) => {
         return `linear-gradient(to top right, ${color}, ${color}70 49%, ${color}70 51%, ${color})`
     }
