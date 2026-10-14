@@ -14,6 +14,9 @@ function Dashboard() {
     const [activeGroup, setActiveGroup] = useState(null);
     const [showCreateTask, setShowCreateTask] = useState(false); //create task window visibility
     const [showCreateGroup, setShowCreateGroup] = useState(false); //create group window visibility
+    const [groupToEdit, setGroupToEdit] = useState(null); //group to edit
+    const [editGroupTitle, setEditGroupTitle] = useState('');
+    const [editGroupColor, setEditGroupColor] = useState('');
 
 
     const fetchTasks = async () => {
@@ -94,6 +97,32 @@ function Dashboard() {
         }
     }
 
+    const handleEditGroup = (groupId) => {
+        const group = groups.find(g => g._id === groupId);
+        setEditGroupTitle(group.title);
+        setEditGroupColor(group.color);
+        setGroupToEdit(groupId);
+    }
+
+    const handleUpdateGroup = async () => {
+        try {
+            const response = await fetch(`/api/groups/${groupToEdit}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
+                body: JSON.stringify({ title: editGroupTitle, color: editGroupColor })
+            });
+            if (!response.ok) throw new Error(`Response status: ${response.status}`);
+            setGroupToEdit(null);
+            fetchGroups();
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+
+
     const toggleGroup = (groupId) => {
         setActiveGroup(prev => prev === groupId ? null : groupId);
     }
@@ -108,7 +137,7 @@ function Dashboard() {
             ? `linear-gradient(to top right, ${color}, ${color}70 30%, ${color}50 50%, ${color}30)`
             : 'linear-gradient(to top right, #ffbc3d40, #ffbc3d20)';
     }
-    
+
     const getTabColor = (color) => {
         return `linear-gradient(to top right, ${color}, ${color}70 49%, ${color}70 51%, ${color})`
     }
