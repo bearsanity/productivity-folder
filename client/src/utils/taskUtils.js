@@ -34,7 +34,7 @@ export const isCompletedForPeriod = (frequency, completionHistory) => {
                 return completed >= startOfYear && completed <= endOfYear;
 
             default:
-                return false;
+                return completionHistory.length > 0;
         }
     })
 }

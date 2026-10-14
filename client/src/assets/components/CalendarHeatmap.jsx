@@ -11,7 +11,7 @@ const CalendarHeatmap = ({ completionHistory }) => {
     }
 
     return (
-        <div style={{ display: 'grid', gap: '2px', gridTemplateColumns: 'repeat(7, 18px)' }}>
+        <div style={{ display: 'grid', gap: '2px', gridTemplateColumns: 'repeat(7, 18px)', padding: '0 0 10px 25px' }}>
             {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
                 <div key={index} style={{ textAlign: 'center', fontSize: '10px' }}>{day}</div>
             ))}
