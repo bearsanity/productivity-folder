@@ -224,9 +224,9 @@ function Dashboard() {
                 )}
 
                 {groupToEdit !== null && groupToEdit === activeGroup && (
-                    <Box padding={4}>
+                    <Box padding={4} gap={2} backgroundColor="white" borderRadius="10px" marginBottom={4} maxWidth="500px">
                         <Input value={editGroupTitle} onChange={(e) => setEditGroupTitle(e.target.value)} />
-                        <Flex gap={2} flexWrap="wrap">
+                        <Flex gap={2} flexWrap="wrap" padding={2} >
                             {colorOptions.map((c) => (
                                 <Box
                                     key={c}
