@@ -3,6 +3,7 @@ const express = require("express");
 const mongo = require("./config/connection");
 const routes = require("./routes");
 const cors = require("cors");
+const path = require('path');
 
 
 const PORT = process.env.PORT || 3001;
