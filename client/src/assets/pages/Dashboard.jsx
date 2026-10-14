@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import CreateTask from '../components/CreateTaskForm';
 import CreateGroup from '../components/CreateGroupForm';
 import Taskcard from '../components/Taskcard';
-import { Flex, Heading, Box, Button, Menu, Portal } from '@chakra-ui/react'
+import { Flex, Heading, Box, Button, Menu, Portal, Input } from '@chakra-ui/react'
 import { FaEllipsisV, FaTrash, FaPen } from 'react-icons/fa';
-
+import colorOptions from '../../utils/colorOptions';
 
 
 function Dashboard() {
@@ -52,6 +52,9 @@ function Dashboard() {
     }
 
     const handleDeleteGroup = async (groupId) => {
+        if (!window.confirm('Are you sure you want to delete this group?')) {
+            return;
+        }
         const tasksInGroup = tasks.filter(task => task.group === groupId);
 
         if (tasksInGroup.length > 0) {
@@ -71,17 +74,17 @@ function Dashboard() {
                     });
                 }
             } else {
-            //Delete all the tasks
-            for (const task of tasksInGroup) {
-                await fetch(`/api/tasks/${task._id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    }
-                });
+                //Delete all the tasks
+                for (const task of tasksInGroup) {
+                    await fetch(`/api/tasks/${task._id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        }
+                    });
+                }
             }
         }
-    }
         // Delete the group
         const response = await fetch(`/api/groups/${groupId}`, {
             method: 'DELETE',
@@ -121,7 +124,6 @@ function Dashboard() {
             console.error(error.message);
         }
     };
-
 
     const toggleGroup = (groupId) => {
         setActiveGroup(prev => prev === groupId ? null : groupId);
@@ -221,14 +223,38 @@ function Dashboard() {
                     </Box>
                 )}
 
+                {groupToEdit !== null && groupToEdit === activeGroup && (
+                    <Box padding={4}>
+                        <Input value={editGroupTitle} onChange={(e) => setEditGroupTitle(e.target.value)} />
+                        <Flex gap={2} flexWrap="wrap">
+                            {colorOptions.map((c) => (
+                                <Box
+                                    key={c}
+                                    backgroundColor={c}
+                                    width="32px"
+                                    height="32px"
+                                    borderRadius="full"
+                                    cursor="pointer"
+                                    border={editGroupColor === c ? "3px solid black" : "2px solid transparent"}
+                                    onClick={() => setEditGroupColor(c)}
+                                />
+                            ))}
+                        </Flex>
+                        <Flex>
+                            <Button variant="ghost" onClick={handleUpdateGroup}>Save</Button>
+                            <Button variant="ghost" onClick={() => setGroupToEdit(null)}>Cancel</Button>
+                        </Flex>
+                    </Box>
+                )}
+
 
                 <Box maxWidth="800px" justifyContent="center" margin="0 auto" display="flex" flexDirection="column" gap={1}>
-                    {activeGroup === 'ungrouped' 
-                    ? tasks.filter(task => !task.group).map(task => (
-                        <Taskcard key={task._id} task={task} onTaskUpdated={fetchTasks} groups={groups} />
-                    )) : activeGroup ? tasks.filter(task => task.group === activeGroup).map(task => (
-                        <Taskcard key={task._id} task={task} onTaskUpdated={fetchTasks} groups={groups} />
-                    )) : null }
+                    {activeGroup === 'ungrouped'
+                        ? tasks.filter(task => !task.group).map(task => (
+                            <Taskcard key={task._id} task={task} onTaskUpdated={fetchTasks} groups={groups} />
+                        )) : activeGroup ? tasks.filter(task => task.group === activeGroup).map(task => (
+                            <Taskcard key={task._id} task={task} onTaskUpdated={fetchTasks} groups={groups} />
+                        )) : null}
                 </Box>
             </Box>
 

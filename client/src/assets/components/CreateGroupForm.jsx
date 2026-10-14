@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Box, Button, Field, Input, Heading, Flex} from '@chakra-ui/react'
+import colorOptions from '../../utils/colorOptions';
 
 const CreateGroup = ({ onGroupCreated, onCancel }) => {
     //=================== Hooks ===================
     const [title, setTitle] = useState('');
     const [color, setColor] = useState('#000000');
     const [errorMessageTitle, setErrorMessageTitle] = useState('');
-    const colorOptions = [ '#2297ff', '#9b3cc4', '#37ba35', '#f8001a', '#fd6f04', '#ff67bd', '#ffde01', '#242424', '#cac6c6'];
+
 
 
     //Title and duedate cant be blank
