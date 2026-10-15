@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button, Field, Input } from '@chakra-ui/react'
+import { Box, Button, Field, Input, Flex } from '@chakra-ui/react'
 
 // standard regex email validation
 const validateEmail = (email) => {
@@ -57,35 +57,39 @@ const SignUp = () => {
             if (!response.ok) {
                 throw new Error(`Response status: ${response.status}`);
             }
-        const data = await response.json();
-        console.log(data);
-        const token = data.token;
-        localStorage.setItem('token', token);
-        window.location.href = '/';
+            const data = await response.json();
+            console.log(data);
+            const token = data.token;
+            localStorage.setItem('token', token);
+            window.location.href = '/';
         } catch (error) {
             console.error(error.message);
         }
     };
 
     return (
-        <Box as="form" onSubmit={(e) => e.preventDefault()}>
-            <Field.Root>
-                <Field.Label>Name:</Field.Label>
-                <Input name="nameInput" value={name} onChange={(e) => setName(e.target.value)} onBlur={handleBlur} />
-                {errorMessageName && <Field.ErrorText>{errorMessageName}</Field.ErrorText>}
-            </Field.Root>
-            <Field.Root>
-                <Field.Label>Email:</Field.Label>
-                <Input name="emailInput" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={handleBlur} />
-                {errorMessageEmail && <Field.ErrorText>{errorMessageEmail}</Field.ErrorText>}
-            </Field.Root>
-            <Field.Root>
-                <Field.Label>Password:</Field.Label>
-                <Input name="passwordInput" type="password" value={password} onChange={(e) => setPassword(e.target.value)} onBlur={handleBlur} />
-                {errorMessagePassword && <Field.ErrorText>{errorMessagePassword}</Field.ErrorText>}
-            </Field.Root>
-            <Button onClick={handleSubmit}>Submit</Button>
-        </Box>
+        <Flex justifyContent="center" height="100vh" gap={4}>
+            <Box as="form" maxWidth="300px" maxHeight="350px" borderColor="#747373" borderWidth={1} padding={4} gap={2} borderRadius='md' onSubmit={(e) => e.preventDefault()}>
+                <Field.Root>
+                    <Field.Label>Name:</Field.Label>
+                    <Input name="nameInput" value={name} onChange={(e) => setName(e.target.value)} onBlur={handleBlur} />
+                    {errorMessageName && <Field.ErrorText>{errorMessageName}</Field.ErrorText>}
+                </Field.Root>
+                <Field.Root>
+                    <Field.Label>Email:</Field.Label>
+                    <Input name="emailInput" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={handleBlur} />
+                    {errorMessageEmail && <Field.ErrorText>{errorMessageEmail}</Field.ErrorText>}
+                </Field.Root>
+                <Field.Root>
+                    <Field.Label>Password:</Field.Label>
+                    <Input name="passwordInput" type="password" value={password} onChange={(e) => setPassword(e.target.value)} onBlur={handleBlur} />
+                    {errorMessagePassword && <Field.ErrorText>{errorMessagePassword}</Field.ErrorText>}
+                </Field.Root>
+                <Flex marginTop={4} justifyContent="center">
+                    <Button onClick={handleSubmit}>Submit</Button>
+                </Flex>
+            </Box>
+        </Flex>
     )
 }
 
