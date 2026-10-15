@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button, Field, Input } from '@chakra-ui/react'
+import { Box, Button, Field, Flex, Input } from '@chakra-ui/react'
 
 // standard regex email validation
 const validateEmail = (email) => {
@@ -59,19 +59,25 @@ const Login = () => {
     };
 
     return (
-        <Box as="form" maxWidth="300px" onSubmit={(e) => e.preventDefault()}>
-            <Field.Root>
-                <Field.Label> Email: </Field.Label>
-                <Input name="emailInput" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={handleBlur} />
-                {errorMessageEmail && <Field.ErrorText>{errorMessageEmail}</Field.ErrorText>}
-            </Field.Root>
-            <Field.Root>
-                <Field.Label>Password:</Field.Label>
-                <Input name="passwordInput" type="password" value={password} onChange={(e) => setPassword(e.target.value)} onBlur={handleBlur} />
-                {errorMessagePassword && <Field.ErrorText>{errorMessagePassword}</Field.ErrorText>}
-            </Field.Root>
-            <Button onClick={handleSubmit}>Submit</Button>
-        </Box>
+        <Flex justifyContent="center" height="100vh" gap={4}>
+            <Box as="form" maxWidth="300px" maxHeight="300px" borderColor="#747373" borderWidth={1} padding={4} gap={2} borderRadius='md' onSubmit={(e) => e.preventDefault()}>
+                <Flex marginBottom={3}>
+                    <Field.Root>
+                        <Field.Label> Email: </Field.Label>
+                        <Input name="emailInput" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={handleBlur} />
+                        {errorMessageEmail && <Field.ErrorText>{errorMessageEmail}</Field.ErrorText>}
+                    </Field.Root>
+                </Flex>
+                <Field.Root>
+                    <Field.Label>Password:</Field.Label>
+                    <Input name="passwordInput" type="password" value={password} onChange={(e) => setPassword(e.target.value)} onBlur={handleBlur} />
+                    {errorMessagePassword && <Field.ErrorText>{errorMessagePassword}</Field.ErrorText>}
+                </Field.Root>
+                <Flex marginTop={4} justifyContent="center">
+                    <Button onClick={handleSubmit}>Submit</Button>
+                </Flex>
+            </Box>
+        </Flex>
     )
 }
 

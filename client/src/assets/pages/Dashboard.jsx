@@ -132,7 +132,7 @@ function Dashboard() {
     const getBgColor = () => {
         const noActiveColor = '#ffbc3d'
         if (!activeGroup) return `linear-gradient(to top right, ${noActiveColor}, ${noActiveColor}70 30%, ${noActiveColor}50 50%, ${noActiveColor}30)`;
-        const ungroupedColor = '#ffc75e'
+        const ungroupedColor = '#e7a62c'
         if (activeGroup === 'ungrouped') return `linear-gradient(to top right, ${ungroupedColor}, ${ungroupedColor}70 30%, ${ungroupedColor}50 50%, ${ungroupedColor}30)`;
         const color = groups.find(g => g._id === activeGroup)?.color;
         return color
@@ -198,7 +198,7 @@ function Dashboard() {
             <Box
                 background={getBgColor()}
                 borderRadius="30px 30px 10px 10px"
-                padding={4}
+                padding={6}
                 minHeight="600px"
                 borderLeft="3px solid gray"
                 position="relative"
@@ -260,10 +260,10 @@ function Dashboard() {
 
 
             {/* ================== BUTTONS ==================  */}
-            <Box minHeight="500px" marginTop={2} marginBottom={2}>
+            <Box minHeight="500px" marginTop={2} marginBottom={2} >
                 <Flex gap={2} justifyContent="center" alignItems="top" >
-                    <Button variant='ghost' colorPalette='black' onClick={() => setShowCreateTask(!showCreateTask)}>New Task</Button>
-                    <Button variant='ghost' colorPalette='black' onClick={() => setShowCreateGroup(!showCreateGroup)}>New Group</Button>
+                    <Button fontSize="105%" variant='ghost' colorPalette='black' onClick={() => setShowCreateTask(!showCreateTask)}>New Task</Button>
+                    <Button fontSize="105%" variant='ghost' colorPalette='black' onClick={() => setShowCreateGroup(!showCreateGroup)}>New Group</Button>
                 </Flex>
 
                 {/* ================== CREATE FORMS ==================  */}

@@ -1,7 +1,34 @@
+
+
+@font-face {
+  font-family: 'Libron';
+  src: url('/fonts/Libron-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Libron';
+  src: url('/fonts/Libron-Bold.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Libron';
+  src: url('/fonts/Libron-Italic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+}
+
 body {
   margin: 0;
-  background-color: #fff8e7;
+  background-color: #ffffff;
   color: #1a1a1a;
+  font-family: 'Libron', serif;
   
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Libron', serif !important;
+}
