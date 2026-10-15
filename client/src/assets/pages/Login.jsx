@@ -62,13 +62,13 @@ const Login = () => {
         <Flex justifyContent="center" height="100vh" gap={4}>
             <Box as="form" maxWidth="300px" maxHeight="300px" borderColor="#747373" borderWidth={1} padding={4} gap={2} borderRadius='md' onSubmit={(e) => e.preventDefault()}>
                 <Flex marginBottom={3}>
-                    <Field.Root>
+                    <Field.Root invalid={!!errorMessageEmail}>
                         <Field.Label> Email: </Field.Label>
                         <Input name="emailInput" value={email} onChange={(e) => setEmail(e.target.value)} onBlur={handleBlur} />
                         {errorMessageEmail && <Field.ErrorText>{errorMessageEmail}</Field.ErrorText>}
                     </Field.Root>
                 </Flex>
-                <Field.Root>
+                <Field.Root invalid={!!errorMessagePassword}>
                     <Field.Label>Password:</Field.Label>
                     <Input name="passwordInput" type="password" value={password} onChange={(e) => setPassword(e.target.value)} onBlur={handleBlur} />
                     {errorMessagePassword && <Field.ErrorText>{errorMessagePassword}</Field.ErrorText>}

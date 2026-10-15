@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button, Field, Input, Heading, Flex} from '@chakra-ui/react'
+import { Box, Button, Field, Input, Heading, Flex, Text} from '@chakra-ui/react'
 import colorOptions from '../../utils/colorOptions';
 
 const CreateGroup = ({ onGroupCreated, onCancel }) => {
@@ -48,15 +48,15 @@ const CreateGroup = ({ onGroupCreated, onCancel }) => {
     };
 
     return (
-        <Box as="form" maxWidth="500px" margin="0 auto" gap={4} onSubmit={(e) => e.preventDefault()}>
-            <Heading as="h3">Create Group:</Heading>
-            <Field.Root>
-                <Field.Label>Title:</Field.Label>
-                <Input name="titleInput" value={title} onChange={(e) => setTitle(e.target.value)} onBlur={handleBlur} />
+        <Flex as="form" direction="column" gap={3} maxWidth="500px" margin="0 auto" onSubmit={(e) => e.preventDefault()}>
+            {/* <Heading as="h3">Create Group:</Heading> */}
+            <Field.Root invalid={!!errorMessageTitle}>
+                <Field.Label htmlFor='groupTitle'>Title:</Field.Label>
+                <Input id='groupTitle' name="titleInput" value={title} onChange={(e) => setTitle(e.target.value)} onBlur={handleBlur} />
                 {errorMessageTitle && <Field.ErrorText>{errorMessageTitle}</Field.ErrorText>}
             </Field.Root>
             <Field.Root>
-                <Field.Label>Color:</Field.Label>
+                <Text >Color:</Text>
                 <Flex gap={2} flexWrap="wrap">
                     {colorOptions.map((c) => (
                         <Box
@@ -76,7 +76,7 @@ const CreateGroup = ({ onGroupCreated, onCancel }) => {
                 <Button variant="ghost" onClick={handleSubmit}>Submit</Button>
                 <Button variant="ghost" onClick={() => { setTitle(''); setColor('#000000'); onCancel(); }}>Cancel</Button>
             </Box>
-        </Box>
+        </Flex>
     )
 }
 

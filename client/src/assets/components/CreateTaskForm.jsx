@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Button, Field, Input, NativeSelect, Heading } from '@chakra-ui/react'
+import { Box, Button, Field, Input, NativeSelect, Heading, Flex } from '@chakra-ui/react'
 
 const CreateTask = ({ onTaskCreated, groups, onCancel }) => {
     //=================== Hooks ===================
@@ -62,9 +62,9 @@ const CreateTask = ({ onTaskCreated, groups, onCancel }) => {
     };
 
     return (
-        <Box as="form" maxWidth="500px" margin="0 auto" onSubmit={(e) => e.preventDefault()}>
-            <Heading as="h3">Create Task:</Heading>
-            <Field.Root>
+        <Flex as="form" maxWidth="500px" direction="column" gap={3} margin="0 auto" onSubmit={(e) => e.preventDefault()}>
+            {/* <Heading as="h3">Create Task:</Heading> */}
+            <Field.Root invalid={!!errorMessageTitle}>
                 <Field.Label>Title:</Field.Label>
                 <Input name="titleInput" value={title} onChange={(e) => setTitle(e.target.value)} onBlur={handleBlur} />
                 {errorMessageTitle && <Field.ErrorText>{errorMessageTitle}</Field.ErrorText>}
@@ -113,7 +113,7 @@ const CreateTask = ({ onTaskCreated, groups, onCancel }) => {
                 <Button variant="ghost" onClick={handleSubmit}>Submit</Button>
                 <Button variant="ghost" onClick={() => { setTitle(''); setFrequency('none'); setDueDate(''); setPriority('none'); setGroup(''); onCancel(); }}>Cancel</Button>
             </Box>
-        </Box>
+        </Flex>
     )
 }
 

@@ -155,16 +155,16 @@ function Dashboard() {
 
             {/* ================== CREATE BUTTONS ================== */}
             <Flex gap={2} justifyContent="flex-end" marginBottom={2}>
-                <Dialog.Root>
+                <Dialog.Root open={showCreateTask} onOpenChange={(e) => setShowCreateTask(e.open)}>
                     <Dialog.Trigger asChild>
-                        <Button variant="ghost">New Task</Button>
+                        <Button variant="ghost" onClick={() => setShowCreateTask(true)}>New Task</Button>
                     </Dialog.Trigger>
                     <Portal>
                         <Dialog.Backdrop />
                         <Dialog.Positioner>
                             <Dialog.Content padding={6}>
-                                <Dialog.Header>
-                                    <Dialog.Title>New Task</Dialog.Title>
+                                <Dialog.Header justifyContent="center">
+                                    <Dialog.Title>Create Task</Dialog.Title>
                                 </Dialog.Header>
                                 <Dialog.Body>
                                     <CreateTask onTaskCreated={() => { fetchTasks(); setShowCreateTask(false); }} groups={groups} onCancel={() => setShowCreateTask(false)} />
@@ -174,16 +174,16 @@ function Dashboard() {
                     </Portal>
                 </Dialog.Root>
 
-                <Dialog.Root>
+                <Dialog.Root open={showCreateGroup} onOpenChange={(e) => setShowCreateGroup(e.open)}>
                     <Dialog.Trigger asChild>
-                        <Button variant="ghost">New Group</Button>
+                        <Button variant="ghost" onClick={() => setShowCreateGroup(true)} >New Group</Button>
                     </Dialog.Trigger>
                     <Portal>
                         <Dialog.Backdrop />
                         <Dialog.Positioner>
                             <Dialog.Content padding={6}>
-                                <Dialog.Header>
-                                    <Dialog.Title>New Group</Dialog.Title>
+                                <Dialog.Header justifyContent="center">
+                                    <Dialog.Title>Create Group Group</Dialog.Title>
                                 </Dialog.Header>
                                 <Dialog.Body>
                                     <CreateGroup onGroupCreated={() => { fetchGroups(); setShowCreateGroup(false); }} onCancel={() => setShowCreateGroup(false)} />
