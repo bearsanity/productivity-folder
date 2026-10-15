@@ -131,12 +131,12 @@ function Dashboard() {
 
     const getBgColor = () => {
         const noActiveColor = '#ffbc3d'
-        if (!activeGroup) return `linear-gradient(to top right, ${noActiveColor}, ${noActiveColor}70 30%, ${noActiveColor}50 50%, ${noActiveColor}30)`;
+        if (!activeGroup) return `linear-gradient(to top right, ${noActiveColor}, ${noActiveColor}70 60%, ${noActiveColor}50 80%, ${noActiveColor}30)`;
         const ungroupedColor = '#e7a62c'
-        if (activeGroup === 'ungrouped') return `linear-gradient(to top right, ${ungroupedColor}, ${ungroupedColor}70 30%, ${ungroupedColor}50 50%, ${ungroupedColor}30)`;
+        if (activeGroup === 'ungrouped') return `linear-gradient(to top right, ${ungroupedColor}, ${ungroupedColor}70 60%, ${ungroupedColor}50 80%, ${ungroupedColor}30)`;
         const color = groups.find(g => g._id === activeGroup)?.color;
         return color
-            ? `linear-gradient(to top right, ${color}, ${color}70 30%, ${color}50 50%, ${color}30)`
+            ? `linear-gradient(to top right, ${color}, ${color}70 60%, ${color}50 80%, ${color}30)`
             : 'linear-gradient(to top right, #ffbc3d40, #ffbc3d20)';
     }
 
