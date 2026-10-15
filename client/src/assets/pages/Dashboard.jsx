@@ -151,7 +151,7 @@ function Dashboard() {
         fetchGroups();
     }, []);
     return (
-        <Box padding={6} >
+        <Box padding={6} maxWidth={1500} justifyContent="center" margin="0 auto" display="flex" flexDirection="column">
 
             {/* ================== TABS ================== */}
             <Flex flexWrap="nowrap" overflowX="auto" gap={1} margin="0 auto" marginLeft='28px' marginRight='28px'>
