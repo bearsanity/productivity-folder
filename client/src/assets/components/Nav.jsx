@@ -12,9 +12,9 @@ function Nav() {
     return (
         <Box as="nav" >
             {isLoggedIn ? (
-                <Flex paddingRight={4}>
+                <Flex paddingRight={2}>
                     {/* <NavLink to="/">Home</NavLink> */}
-                    <Button alignItems="center"  variant="ghost" borderRadius="md" fontSize="110%" onClick={handleLogout}>Logout</Button>
+                    <Button alignItems="center"  variant="ghost" borderRadius="md"  onClick={handleLogout}>Logout</Button>
                 </Flex>
             ) : (
                 <Flex gap={4} display="flex" justifyContent="center" alignItems="center" fontSize="110%">
