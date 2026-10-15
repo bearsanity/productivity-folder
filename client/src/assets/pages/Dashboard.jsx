@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import CreateTask from '../components/CreateTaskForm';
 import CreateGroup from '../components/CreateGroupForm';
 import Taskcard from '../components/Taskcard';
-import { Flex, Heading, Box, Button, Menu, Portal, Input } from '@chakra-ui/react'
+import { Flex, Heading, Box, Button, Menu, Portal, Input, Dialog } from '@chakra-ui/react'
 import { FaEllipsisV, FaTrash, FaPen } from 'react-icons/fa';
 import colorOptions from '../../utils/colorOptions';
 
@@ -153,6 +153,49 @@ function Dashboard() {
     return (
         <Box padding={6} maxWidth={1500} justifyContent="center" margin="0 auto" display="flex" flexDirection="column">
 
+            {/* ================== CREATE BUTTONS ================== */}
+            <Flex gap={2} justifyContent="flex-end" marginBottom={2}>
+                <Dialog.Root>
+                    <Dialog.Trigger asChild>
+                        <Button variant="ghost">New Task</Button>
+                    </Dialog.Trigger>
+                    <Portal>
+                        <Dialog.Backdrop />
+                        <Dialog.Positioner>
+                            <Dialog.Content padding={6}>
+                                <Dialog.Header>
+                                    <Dialog.Title>New Task</Dialog.Title>
+                                </Dialog.Header>
+                                <Dialog.Body>
+                                    <CreateTask onTaskCreated={() => { fetchTasks(); setShowCreateTask(false); }} groups={groups} onCancel={() => setShowCreateTask(false)} />
+                                </Dialog.Body>
+                            </Dialog.Content>
+                        </Dialog.Positioner>
+                    </Portal>
+                </Dialog.Root>
+
+                <Dialog.Root>
+                    <Dialog.Trigger asChild>
+                        <Button variant="ghost">New Group</Button>
+                    </Dialog.Trigger>
+                    <Portal>
+                        <Dialog.Backdrop />
+                        <Dialog.Positioner>
+                            <Dialog.Content padding={6}>
+                                <Dialog.Header>
+                                    <Dialog.Title>New Group</Dialog.Title>
+                                </Dialog.Header>
+                                <Dialog.Body>
+                                    <CreateGroup onGroupCreated={() => { fetchGroups(); setShowCreateGroup(false); }} onCancel={() => setShowCreateGroup(false)} />
+                                </Dialog.Body>
+                            </Dialog.Content>
+                        </Dialog.Positioner>
+                    </Portal>
+                </Dialog.Root>
+
+            </Flex>
+
+
             {/* ================== TABS ================== */}
             <Flex flexWrap="nowrap" overflowX="auto" gap={1} margin="0 auto" marginLeft='28px' marginRight='28px'>
                 {groups.map((g) => (
@@ -259,17 +302,19 @@ function Dashboard() {
             </Box>
 
 
+
+
             {/* ================== BUTTONS ==================  */}
-            <Box minHeight="500px" marginTop={2} marginBottom={2} >
+            {/* <Box minHeight="500px" marginTop={2} marginBottom={2} >
                 <Flex gap={2} justifyContent="center" alignItems="top" >
                     <Button fontSize="105%" variant='ghost' colorPalette='black' onClick={() => setShowCreateTask(!showCreateTask)}>New Task</Button>
                     <Button fontSize="105%" variant='ghost' colorPalette='black' onClick={() => setShowCreateGroup(!showCreateGroup)}>New Group</Button>
-                </Flex>
+                </Flex> */}
 
-                {/* ================== CREATE FORMS ==================  */}
-                {showCreateTask && <CreateTask onTaskCreated={() => { fetchTasks(); setShowCreateTask(false); }} groups={groups} onCancel={() => setShowCreateTask(false)} />} {/*so the dashboard refreshes on task creation*/}
+            {/* ================== CREATE FORMS ==================  */}
+            {/* {showCreateTask && <CreateTask onTaskCreated={() => { fetchTasks(); setShowCreateTask(false); }} groups={groups} onCancel={() => setShowCreateTask(false)} />} {/*so the dashboard refreshes on task creation}
                 {showCreateGroup && <CreateGroup onGroupCreated={() => { fetchGroups(); setShowCreateGroup(false); }} onCancel={() => setShowCreateGroup(false)} />}
-            </Box>
+            </Box> */}
 
         </Box>
 
