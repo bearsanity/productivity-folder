@@ -152,9 +152,21 @@ function Dashboard() {
     }, []);
     return (
         <Box padding={6} maxWidth={1500} justifyContent="center" margin="0 auto" display="flex" flexDirection="column">
-
-            {/* ================== CREATE BUTTONS ================== */}
             <Flex gap={2} justifyContent="flex-end" marginBottom={2} >
+                {/* ==== MOBILE TABS ==== */}
+                <Box display={{ base: "block", md: "none" }} marginBottom={2} marginRight={"auto"} justifyContent="left" flex="none" maxWidth={200}>
+                    <NativeSelect.Root>
+                        <NativeSelect.Field value={activeGroup || ''} onChange={(e) => setActiveGroup(e.target.value || null)}>
+                            <option value="">Select a group</option>
+                            {groups.map((g) => (
+                                <option key={g._id} value={g._id}>{g.title}</option>
+                            ))}
+                            <option value="ungrouped">Ungrouped</option>
+                        </NativeSelect.Field>
+                    </NativeSelect.Root>
+                </Box>
+
+                {/* ================== CREATE BUTTONS ================== */}
                 <Dialog.Root open={showCreateTask} onOpenChange={(e) => setShowCreateTask(e.open)}>
                     <Dialog.Trigger asChild>
                         <Button variant="ghost" onClick={() => setShowCreateTask(true)}>New Task</Button>
@@ -193,18 +205,7 @@ function Dashboard() {
                     </Portal>
                 </Dialog.Root>
 
-                {/* ==== MOBILE TABS ==== */}
-                <Box display={{ base: "block", md: "none" }} marginBottom={2} justifyContent="left" maxWidth={200}>
-                    <NativeSelect.Root>
-                        <NativeSelect.Field value={activeGroup || ''} onChange={(e) => setActiveGroup(e.target.value || null)}>
-                            <option value="">Select a group</option>
-                            {groups.map((g) => (
-                                <option key={g._id} value={g._id}>{g.title}</option>
-                            ))}
-                            <option value="ungrouped">Ungrouped</option>
-                        </NativeSelect.Field>
-                    </NativeSelect.Root>
-                </Box>
+
             </Flex>
 
             {/* ================== TABS ================== */}
