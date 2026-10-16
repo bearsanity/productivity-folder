@@ -163,7 +163,7 @@ const Taskcard = ({ task, onTaskUpdated, groups }) => {
                         </Box>
                     </Box>
 
-                    <Flex gap={2} >
+                    <Flex gap={2} direction="column">
                         <Button size="sm" variant="ghost" colorPalette="gray" onClick={handleComplete}><FaCheck /></Button>
                         <Button size="sm" variant="ghost" colorPalette="gray" onClick={() => setIsEditing(true)}><FaPen /></Button>
                         <Button size="sm" variant="ghost" colorPalette="gray" onClick={handleDelete}><FaTrash /></Button>

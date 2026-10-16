@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import CreateTask from '../components/CreateTaskForm';
 import CreateGroup from '../components/CreateGroupForm';
 import Taskcard from '../components/Taskcard';
-import { Flex, Heading, Box, Button, Menu, Portal, Input, Dialog } from '@chakra-ui/react'
+import { Flex, Heading, Box, Button, Menu, Portal, Input, Dialog, NativeSelect } from '@chakra-ui/react'
 import { FaEllipsisV, FaTrash, FaPen } from 'react-icons/fa';
 import colorOptions from '../../utils/colorOptions';
 
@@ -154,7 +154,7 @@ function Dashboard() {
         <Box padding={6} maxWidth={1500} justifyContent="center" margin="0 auto" display="flex" flexDirection="column">
 
             {/* ================== CREATE BUTTONS ================== */}
-            <Flex gap={2} justifyContent="flex-end" marginBottom={2}>
+            <Flex gap={2} justifyContent="flex-end" marginBottom={2} >
                 <Dialog.Root open={showCreateTask} onOpenChange={(e) => setShowCreateTask(e.open)}>
                     <Dialog.Trigger asChild>
                         <Button variant="ghost" onClick={() => setShowCreateTask(true)}>New Task</Button>
@@ -183,7 +183,7 @@ function Dashboard() {
                         <Dialog.Positioner>
                             <Dialog.Content padding={6}>
                                 <Dialog.Header justifyContent="center">
-                                    <Dialog.Title>Create Group Group</Dialog.Title>
+                                    <Dialog.Title>Create Group</Dialog.Title>
                                 </Dialog.Header>
                                 <Dialog.Body>
                                     <CreateGroup onGroupCreated={() => { fetchGroups(); setShowCreateGroup(false); }} onCancel={() => setShowCreateGroup(false)} />
@@ -193,11 +193,24 @@ function Dashboard() {
                     </Portal>
                 </Dialog.Root>
 
+                {/* ==== MOBILE TABS ==== */}
+                <Box display={{ base: "block", md: "none" }} marginBottom={2} justifyContent="left" maxWidth={200}>
+                    <NativeSelect.Root>
+                        <NativeSelect.Field value={activeGroup || ''} onChange={(e) => setActiveGroup(e.target.value || null)}>
+                            <option value="">Select a group</option>
+                            {groups.map((g) => (
+                                <option key={g._id} value={g._id}>{g.title}</option>
+                            ))}
+                            <option value="ungrouped">Ungrouped</option>
+                        </NativeSelect.Field>
+                    </NativeSelect.Root>
+                </Box>
             </Flex>
 
-
             {/* ================== TABS ================== */}
-            <Flex flexWrap="nowrap" overflowX="auto" gap={1} margin="0 auto" marginLeft='28px' marginRight='28px'>
+
+            {/* ==== DESKTOP ==== */}
+            <Flex flexWrap="nowrap" overflowX="auto" display={{ base: "none", md: "flex" }} gap={1} margin="0 auto" marginLeft='28px' marginRight='28px' >
                 {groups.map((g) => (
                     <Heading
                         as="h3"
@@ -213,6 +226,7 @@ function Dashboard() {
                         padding={2}
                         paddingLeft={2}
                         fontSize="md"
+                        whiteSpace="nowrap"
                         onClick={() => toggleGroup(g._id)}
                     >
                         {g.title}
@@ -231,6 +245,7 @@ function Dashboard() {
                     textAlign="center"
                     padding={2}
                     fontSize="md"
+                    whiteSpace="nowrap"
                     onClick={() => toggleGroup('ungrouped')}>
                     Ungrouped
                 </Heading>
@@ -300,23 +315,8 @@ function Dashboard() {
                         )) : null}
                 </Box>
             </Box>
-
-
-
-
-            {/* ================== BUTTONS ==================  */}
-            {/* <Box minHeight="500px" marginTop={2} marginBottom={2} >
-                <Flex gap={2} justifyContent="center" alignItems="top" >
-                    <Button fontSize="105%" variant='ghost' colorPalette='black' onClick={() => setShowCreateTask(!showCreateTask)}>New Task</Button>
-                    <Button fontSize="105%" variant='ghost' colorPalette='black' onClick={() => setShowCreateGroup(!showCreateGroup)}>New Group</Button>
-                </Flex> */}
-
-            {/* ================== CREATE FORMS ==================  */}
-            {/* {showCreateTask && <CreateTask onTaskCreated={() => { fetchTasks(); setShowCreateTask(false); }} groups={groups} onCancel={() => setShowCreateTask(false)} />} {/*so the dashboard refreshes on task creation}
-                {showCreateGroup && <CreateGroup onGroupCreated={() => { fetchGroups(); setShowCreateGroup(false); }} onCancel={() => setShowCreateGroup(false)} />}
-            </Box> */}
-
         </Box>
+
 
     );
 }
