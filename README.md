@@ -65,6 +65,9 @@ If you delete a group with tasks inside, you will be prompted to either save the
 If you choose to save them, they will be moved to the "Ungrouped" tab until you choose to move or delete them.
 
 
+<img width="390" height="415" alt="image" src="https://github.com/user-attachments/assets/02c6776b-bfb7-4da4-9a61-38b445d8f78b" />
+
+Clicking on the name of a task will bring up a calendar showing you all the days over the last 4 weeks where you successfully completed the task.
 
 
 
