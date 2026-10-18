@@ -13,9 +13,9 @@ Taskboard/Reminders app to keep you on track. Stylized like an actual folder for
 ## Table of Contents
 
 - [Installation](#installation)
-- [Usage](#usage)
-- [Known Issues] (#Known Issues)
-- [Planned Updates] (#Planned Updates)
+- [Usage](#usage) 
+- [Known Issues] (#KnownIssues)
+- [Planned Updates] (#PlannedUpdates)
 - [Credits](#credits)
 - [License](#License)
 - [Contributing](#contributing)
@@ -33,11 +33,11 @@ npm install-all
 Head to productivityfolder.com to use the web hosted version. To run locally run "npm run dev" in the root folder then open the browser to address it tells you.
 
 
-## Known Issues
+## KnownIssues
 -Localized time is incorrect on tasks
 
 
-## Planned Updates
+## PlannedUpdates
 -Dark Mode
 -Option for tasks to be "every week/month etc. on this day" rather than just "any day during this period" so it resets at specific times not at the start of each period
 -Tests
