@@ -33,13 +33,19 @@ npm install-all
 Head to productivityfolder.com to use the web hosted version. To run locally run "npm run dev" in the root folder then open the browser to address it tells you.
 
 
+
 ## KnownIssues
+
 -Localized time is incorrect on tasks
 
 
+
 ## PlannedUpdates
+
 -Dark Mode
+
 -Option for tasks to be "every week/month etc. on this day" rather than just "any day during this period" so it resets at specific times not at the start of each period
+
 -Tests
 
 
