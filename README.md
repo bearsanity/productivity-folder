@@ -14,8 +14,8 @@ Taskboard/Reminders app to keep you on track. Stylized like an actual folder for
 
 - [Installation](#installation)
 - [Usage](#usage) 
-- [Known Issues] (#KnownIssues)
-- [Planned Updates] (#PlannedUpdates)
+- [Known Issues](#KnownIssues)
+- [Planned Updates](#PlannedUpdates)
 - [Credits](#credits)
 - [License](#License)
 - [Contributing](#contributing)
